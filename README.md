@@ -14,3 +14,7 @@
 - 학습 완료 체크
 - PDF 출력용 스타일
 - 모바일 카드 인터랙션 개선
+
+## Image Credits
+
+- Airplane window assets are prototype images sourced from Unsplash.

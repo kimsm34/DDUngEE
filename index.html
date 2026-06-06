@@ -11,28 +11,35 @@
     <style>
       :root {
         color-scheme: light;
-        --ink: #17202a;
-        --muted: #65707f;
-        --paper: #fffaf0;
-        --surface: #ffffff;
-        --line: #d9d2c3;
-        --navy: #14324a;
-        --sky: #9bd7e8;
-        --coral: #e96f55;
-        --green: #227c68;
-        --gold: #c6943e;
-        --shadow: 0 20px 60px rgba(20, 50, 74, 0.16);
+        --ink: #12233d;
+        --muted: #6c7480;
+        --paper: #fbf7ef;
+        --paper-deep: #f3eadc;
+        --surface: #fffdf8;
+        --line: #e3dbcd;
+        --navy: #12345a;
+        --navy-2: #1f5a96;
+        --sky: #dcebf3;
+        --sky-2: #eef6f8;
+        --coral: #ee765e;
+        --gold: #bc8f3a;
+        --shadow: 0 18px 45px rgba(37, 48, 62, 0.12);
+        --soft-shadow: 0 10px 26px rgba(37, 48, 62, 0.08);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         background:
-          linear-gradient(180deg, rgba(155, 215, 232, 0.42), transparent 240px),
-          var(--paper);
+          linear-gradient(115deg, rgba(220, 235, 243, 0.52), transparent 42%),
+          linear-gradient(180deg, #fffdf8 0, var(--paper) 460px);
         color: var(--ink);
         font-family:
           ui-sans-serif,
@@ -48,29 +55,28 @@
         font: inherit;
       }
 
-      .app-shell {
+      .shell {
         min-height: 100vh;
-        display: grid;
-        grid-template-rows: auto 1fr;
       }
 
       .topbar {
         position: sticky;
         top: 0;
-        z-index: 10;
-        border-bottom: 1px solid rgba(23, 32, 42, 0.12);
-        background: rgba(255, 250, 240, 0.86);
-        backdrop-filter: blur(14px);
+        z-index: 20;
+        border-bottom: 1px solid rgba(18, 52, 90, 0.12);
+        background: rgba(255, 253, 248, 0.9);
+        backdrop-filter: blur(18px);
       }
 
       .topbar-inner {
-        max-width: 1120px;
+        height: 74px;
+        max-width: 1380px;
         margin: 0 auto;
-        padding: 16px 20px;
+        padding: 0 28px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 18px;
       }
 
       .brand {
@@ -83,294 +89,358 @@
       .brand-mark {
         width: 38px;
         height: 38px;
-        border: 2px solid var(--navy);
-        background: linear-gradient(135deg, var(--sky), #ffffff 58%, var(--coral));
         display: grid;
         place-items: center;
+        border: 2px solid var(--navy);
         color: var(--navy);
-        font-weight: 900;
+        background: #fff;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.05rem;
+        font-weight: 800;
         letter-spacing: 0;
       }
 
       .brand-title {
         margin: 0;
-        font-size: clamp(1rem, 1.4vw, 1.22rem);
-        line-height: 1.15;
+        color: var(--navy);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.22rem;
+        font-weight: 800;
+        line-height: 1.05;
       }
 
       .brand-subtitle {
-        margin: 2px 0 0;
+        margin: 4px 0 0;
         color: var(--muted);
-        font-size: 0.86rem;
-        line-height: 1.25;
+        font-size: 0.82rem;
+        line-height: 1.2;
       }
 
-      .progress-pill {
-        min-width: max-content;
-        border: 1px solid rgba(20, 50, 74, 0.18);
-        color: var(--navy);
-        background: #fff;
-        padding: 8px 10px;
-        font-size: 0.86rem;
-        font-weight: 700;
-      }
-
-      main {
-        max-width: 1120px;
-        width: 100%;
-        margin: 0 auto;
-        padding: 34px 20px 54px;
-      }
-
-      .hero-band {
-        display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
-        gap: 28px;
-        align-items: stretch;
-        margin-bottom: 28px;
-      }
-
-      .intro-copy {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 272px;
-      }
-
-      .eyebrow {
-        margin: 0 0 12px;
-        color: var(--green);
-        font-weight: 800;
-        font-size: 0.86rem;
-      }
-
-      h1 {
-        margin: 0;
-        max-width: 780px;
-        font-size: clamp(2.2rem, 6vw, 5.6rem);
-        line-height: 0.95;
-        letter-spacing: 0;
-        color: var(--navy);
-      }
-
-      .intro-copy p {
-        max-width: 620px;
-        margin: 18px 0 0;
-        color: #354354;
-        font-size: clamp(1rem, 1.7vw, 1.22rem);
-      }
-
-      .window-scene {
-        position: relative;
-        min-height: 300px;
-        border: 2px solid var(--navy);
-        background:
-          radial-gradient(circle at 70% 28%, rgba(255, 255, 255, 0.95) 0 34px, transparent 35px),
-          linear-gradient(180deg, #77c9e1 0%, #f5d19a 54%, #fffaf0 55%, #fffaf0 100%);
-        overflow: hidden;
-        box-shadow: var(--shadow);
-      }
-
-      .window-scene::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 44%;
-        background:
-          linear-gradient(12deg, transparent 0 26%, rgba(20, 50, 74, 0.9) 27% 39%, transparent 40%),
-          linear-gradient(165deg, transparent 0 42%, rgba(34, 124, 104, 0.85) 43% 51%, transparent 52%),
-          #ffffff;
-      }
-
-      .window-frame {
-        position: absolute;
-        inset: 20px;
-        border: 14px solid rgba(255, 255, 255, 0.72);
-        box-shadow: inset 0 0 0 2px rgba(20, 50, 74, 0.5);
-      }
-
-      .route-tag {
-        position: absolute;
-        left: 28px;
-        bottom: 24px;
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        padding: 8px 10px;
-        background: var(--surface);
-        border: 1px solid rgba(20, 50, 74, 0.2);
-        color: var(--navy);
-        font-size: 0.84rem;
-        font-weight: 800;
-      }
-
-      .route-line {
-        width: 42px;
-        height: 2px;
-        background: var(--coral);
-        position: relative;
-      }
-
-      .route-line::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 50%;
-        width: 7px;
-        height: 7px;
+      .avatar {
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
-        background: var(--coral);
-        transform: translateY(-50%);
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(18, 52, 90, 0.16);
+        background: linear-gradient(135deg, #f9d2bf, #f7ead2 54%, #dbeaf3);
+        color: var(--navy);
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 900;
       }
 
-      .word-layout {
+      .layout {
+        max-width: 1380px;
+        margin: 0 auto;
         display: grid;
-        grid-template-columns: 260px minmax(0, 1fr);
-        gap: 22px;
-        align-items: start;
+        grid-template-columns: 318px minmax(0, 1fr);
+        min-height: calc(100vh - 74px);
+      }
+
+      .sidebar {
+        border-right: 1px solid rgba(18, 52, 90, 0.12);
+        padding: 44px 24px 28px 26px;
+      }
+
+      .lesson-kicker {
+        margin: 0;
+        color: #526070;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .lesson-title {
+        margin: 6px 0 20px;
+        color: var(--navy);
+        font-size: 1.42rem;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .progress-line {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 30px;
+        color: #637184;
+        font-size: 0.86rem;
+        font-weight: 800;
+      }
+
+      .progress-track {
+        height: 3px;
+        background: rgba(18, 52, 90, 0.12);
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        display: block;
+        width: var(--progress, 20%);
+        height: 100%;
+        background: var(--navy);
       }
 
       .word-list {
-        position: sticky;
-        top: 84px;
         display: grid;
-        gap: 8px;
+        gap: 10px;
       }
 
       .word-tab {
+        position: relative;
         width: 100%;
-        border: 1px solid rgba(20, 50, 74, 0.15);
-        background: rgba(255, 255, 255, 0.72);
+        min-height: 78px;
+        border: 1px solid rgba(18, 52, 90, 0.12);
+        background: rgba(255, 253, 248, 0.78);
         color: var(--ink);
-        padding: 11px 12px;
-        text-align: left;
+        padding: 14px 40px 14px 16px;
         display: grid;
-        grid-template-columns: 34px 1fr;
-        gap: 10px;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
         align-items: center;
+        text-align: left;
         cursor: pointer;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      .word-tab::before,
+      .word-tab::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 10px;
+        height: 18px;
+        background: var(--paper);
+        border: 1px solid rgba(18, 52, 90, 0.08);
+        transform: translateY(-50%);
+      }
+
+      .word-tab::before {
+        left: -1px;
+        border-left: 0;
+        border-radius: 0 12px 12px 0;
+      }
+
+      .word-tab::after {
+        right: -1px;
+        border-right: 0;
+        border-radius: 12px 0 0 12px;
       }
 
       .word-tab:hover,
       .word-tab:focus-visible {
-        border-color: var(--navy);
+        border-color: rgba(18, 52, 90, 0.4);
         outline: none;
       }
 
       .word-tab.active {
-        background: var(--navy);
-        color: #ffffff;
-        border-color: var(--navy);
+        background: linear-gradient(135deg, var(--navy), #1f5a96);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: var(--soft-shadow);
+      }
+
+      .word-tab.active::before,
+      .word-tab.active::after {
+        border-color: transparent;
       }
 
       .word-number {
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
         display: grid;
         place-items: center;
         border: 1px solid currentColor;
-        font-size: 0.76rem;
+        color: inherit;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.86rem;
         font-weight: 900;
       }
 
       .word-name {
         display: block;
-        font-size: 0.98rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.04rem;
         font-weight: 900;
-        line-height: 1.2;
+        line-height: 1.12;
       }
 
       .word-korean {
         display: block;
-        margin-top: 2px;
-        opacity: 0.72;
-        font-size: 0.78rem;
-        line-height: 1.2;
-      }
-
-      .study-panel {
-        border: 2px solid var(--navy);
-        background: var(--surface);
-        box-shadow: var(--shadow);
-      }
-
-      .boarding-strip {
-        border-bottom: 1px dashed rgba(20, 50, 74, 0.34);
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 16px;
-        align-items: center;
-        padding: 18px 20px;
-        background: linear-gradient(90deg, rgba(155, 215, 232, 0.26), rgba(233, 111, 85, 0.12));
-      }
-
-      .day-label {
-        margin: 0;
-        color: var(--green);
+        margin-top: 3px;
+        opacity: 0.74;
         font-size: 0.82rem;
-        font-weight: 900;
+        line-height: 1.25;
       }
 
-      .hidden-word {
-        margin: 4px 0 0;
-        font-size: clamp(1.4rem, 3.4vw, 2.6rem);
-        line-height: 1.04;
-        color: var(--navy);
-        letter-spacing: 0;
+      .plane-icon {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        color: currentColor;
+        font-size: 1.05rem;
+        transform: translateY(-50%);
+      }
+
+      .content {
+        padding: 26px 28px 42px;
+      }
+
+      .study-card {
+        position: relative;
+        max-width: 1040px;
+        margin: 0 auto;
+        border: 1px solid rgba(18, 52, 90, 0.12);
+        background: rgba(255, 253, 248, 0.95);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .hero-window {
+        position: relative;
+        min-height: 304px;
+        padding: 30px 36px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background:
+          linear-gradient(90deg, rgba(255, 253, 248, 0.96) 0 26%, rgba(255, 253, 248, 0.72) 42%, rgba(255, 253, 248, 0.04) 70%),
+          linear-gradient(180deg, rgba(18, 52, 90, 0.04), rgba(18, 52, 90, 0.1)),
+          url("assets/flight-sky-window.jpg");
+        background-size: cover;
+        background-position: center;
       }
 
       .stamp {
-        border: 2px solid var(--coral);
-        color: var(--coral);
-        padding: 8px 10px;
+        position: absolute;
+        top: 28px;
+        left: 34px;
+        width: 132px;
+        height: 82px;
+        border: 2px solid rgba(238, 118, 94, 0.72);
+        color: rgba(238, 118, 94, 0.84);
+        display: grid;
+        place-items: center;
         font-weight: 900;
-        transform: rotate(-2deg);
-        white-space: nowrap;
+        text-align: center;
+        line-height: 1.1;
+        text-transform: uppercase;
+        transform: rotate(-8deg);
+        border-radius: 50%;
+        opacity: 0.9;
       }
 
-      .panel-body {
-        padding: 26px 24px 24px;
+      .stamp::after {
+        content: "";
+        position: absolute;
+        right: -80px;
+        top: 20px;
+        width: 110px;
+        height: 42px;
+        border-top: 2px solid rgba(238, 118, 94, 0.4);
+        border-bottom: 2px solid rgba(238, 118, 94, 0.4);
+        transform: rotate(8deg);
       }
 
-      .section-label {
-        margin: 0 0 10px;
-        color: var(--gold);
-        font-size: 0.78rem;
+      .word-chip {
+        width: max-content;
+        margin-bottom: 14px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #fff;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.76rem;
         font-weight: 900;
         text-transform: uppercase;
       }
 
-      .story {
+      .word-heading {
         margin: 0;
-        font-size: clamp(1rem, 1.4vw, 1.08rem);
-        color: #263241;
-        white-space: pre-line;
+        color: var(--navy);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3.2rem, 7vw, 5.4rem);
+        line-height: 0.9;
+        letter-spacing: 0;
       }
 
-      .sentence {
-        margin: 24px 0 0;
-        border-left: 4px solid var(--green);
-        background: #f3fbf7;
-        padding: 15px 16px;
-        color: var(--navy);
-        font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+      .word-meaning {
+        margin: 12px 0 0;
+        color: #4b6b90;
+        font-size: 1.08rem;
         font-weight: 800;
       }
 
-      .reveal-row {
-        margin-top: 22px;
+      .card-body {
+        padding: 30px 36px 24px;
+      }
+
+      .section {
+        padding: 20px 0;
+        border-top: 1px dashed rgba(18, 52, 90, 0.16);
+      }
+
+      .section:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .section-label {
+        margin: 0 0 9px;
+        color: var(--gold);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .story,
+      .feeling {
+        max-width: 840px;
+        margin: 0;
+        color: #2b3747;
+        font-size: 1.02rem;
+        white-space: pre-line;
+      }
+
+      .sentence-box {
+        max-width: 610px;
+        min-height: 56px;
         display: flex;
-        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        border: 1px solid rgba(18, 52, 90, 0.1);
+        background: linear-gradient(90deg, #e8f2f6, rgba(232, 242, 246, 0.45));
+        padding: 14px 16px;
+        color: var(--navy);
+        font-size: 1.02rem;
+        font-weight: 900;
+      }
+
+      .sentence-hidden {
+        letter-spacing: 0.18em;
+        color: #2b587c;
+        overflow-wrap: anywhere;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
         flex-wrap: wrap;
+        align-items: center;
       }
 
       .primary-button,
       .ghost-button {
-        border: 2px solid var(--navy);
-        padding: 10px 13px;
+        min-height: 42px;
+        border: 1px solid var(--navy);
+        padding: 9px 14px;
         cursor: pointer;
+        font-size: 0.9rem;
         font-weight: 900;
       }
 
@@ -388,44 +458,47 @@
       .primary-button:focus-visible,
       .ghost-button:hover,
       .ghost-button:focus-visible {
-        outline: 3px solid rgba(233, 111, 85, 0.35);
+        outline: 3px solid rgba(238, 118, 94, 0.24);
         outline-offset: 2px;
       }
 
-      .revealed {
-        margin-top: 24px;
-        padding-top: 22px;
-        border-top: 1px solid rgba(20, 50, 74, 0.16);
-        display: grid;
-        gap: 18px;
-      }
-
-      .revealed[hidden] {
-        display: none;
-      }
-
-      .word-reveal {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        align-items: baseline;
-      }
-
-      .word-reveal strong {
-        color: var(--navy);
-        font-size: clamp(1.9rem, 4vw, 3.6rem);
-        line-height: 0.95;
-      }
-
-      .word-reveal span {
-        color: var(--muted);
+      .quiz-copy {
+        margin: 0 0 14px;
+        color: #2b3747;
         font-weight: 800;
       }
 
-      .feeling {
-        margin: 0;
-        color: #263241;
-        font-size: 1rem;
+      .quiz-options {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        gap: 12px;
+        max-width: 760px;
+      }
+
+      .quiz-option {
+        border: 1px solid rgba(18, 52, 90, 0.14);
+        background: #fff;
+        padding: 9px 10px;
+        color: var(--ink);
+        text-align: center;
+        font-weight: 800;
+      }
+
+      .quiz-option.correct {
+        border-color: rgba(31, 90, 150, 0.32);
+        background: #eef5fb;
+        color: var(--navy);
+      }
+
+      .bottom-bar {
+        margin-top: 16px;
+        border: 1px solid rgba(18, 52, 90, 0.08);
+        background: rgba(255, 250, 241, 0.9);
+        padding: 14px 16px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 18px;
+        align-items: center;
       }
 
       .phrases {
@@ -438,91 +511,110 @@
       }
 
       .phrases li {
-        border: 1px solid rgba(34, 124, 104, 0.35);
-        color: var(--green);
-        background: #f4fbf8;
-        padding: 7px 9px;
-        font-weight: 800;
-        font-size: 0.9rem;
-      }
-
-      .quiz {
-        border: 1px solid rgba(20, 50, 74, 0.16);
-        background: #fffaf0;
-        padding: 14px;
-      }
-
-      .quiz p {
-        margin: 0 0 10px;
-        color: var(--ink);
+        background: #edf4f7;
+        color: #315678;
+        padding: 7px 10px;
+        font-size: 0.84rem;
         font-weight: 800;
       }
 
-      .quiz-answer {
-        color: var(--coral);
-        font-weight: 900;
-      }
-
-      .footer-note {
-        margin: 28px 0 0;
+      .word-count {
         color: var(--muted);
-        font-size: 0.92rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 900;
+        text-align: center;
       }
 
-      @media (max-width: 860px) {
-        .hero-band,
-        .word-layout {
+      @media (max-width: 980px) {
+        .layout {
           grid-template-columns: 1fr;
         }
 
-        .intro-copy {
-          min-height: 0;
+        .sidebar {
+          border-right: 0;
+          border-bottom: 1px solid rgba(18, 52, 90, 0.12);
+          padding: 26px 18px 18px;
+        }
+
+        .lesson-title {
+          margin-bottom: 14px;
+        }
+
+        .progress-line {
+          margin-bottom: 18px;
         }
 
         .word-list {
-          position: static;
           grid-auto-flow: column;
-          grid-auto-columns: minmax(172px, 1fr);
-          grid-template-columns: none;
+          grid-auto-columns: minmax(190px, 1fr);
           overflow-x: auto;
           padding-bottom: 4px;
         }
 
         .word-tab {
-          min-width: 172px;
+          min-width: 190px;
+        }
+
+        .content {
+          padding: 20px 16px 38px;
         }
       }
 
-      @media (max-width: 560px) {
+      @media (max-width: 640px) {
         .topbar-inner {
-          align-items: flex-start;
-          flex-direction: column;
+          height: auto;
+          padding: 14px 16px;
         }
 
-        main {
-          padding: 24px 14px 42px;
+        .avatar {
+          display: none;
         }
 
-        .window-scene {
-          min-height: 230px;
-        }
-
-        .boarding-strip {
-          grid-template-columns: 1fr;
+        .hero-window {
+          min-height: 244px;
+          padding: 24px 22px;
+          background:
+            linear-gradient(180deg, rgba(255, 253, 248, 0.96) 0 12%, rgba(255, 253, 248, 0.58) 52%, rgba(255, 253, 248, 0.02) 100%),
+            url("assets/flight-sky-window.jpg");
+          background-size: cover;
+          background-position: center;
         }
 
         .stamp {
-          width: max-content;
+          width: 98px;
+          height: 60px;
+          font-size: 0.78rem;
         }
 
-        .panel-body {
-          padding: 22px 16px 18px;
+        .stamp::after {
+          display: none;
+        }
+
+        .word-heading {
+          font-size: clamp(2.7rem, 16vw, 4.2rem);
+        }
+
+        .card-body {
+          padding: 22px 20px 18px;
+        }
+
+        .quiz-options {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .bottom-bar {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .word-count {
+          text-align: left;
         }
       }
     </style>
   </head>
   <body>
-    <div class="app-shell">
+    <div class="shell">
       <header class="topbar">
         <div class="topbar-inner">
           <div class="brand">
@@ -532,93 +624,73 @@
               <p class="brand-subtitle">승무원 세계관 토익 단어장</p>
             </div>
           </div>
-          <div class="progress-pill" id="progressText">1 / 5</div>
+          <div class="avatar" aria-label="learner profile">J</div>
         </div>
       </header>
 
-      <main>
-        <section class="hero-band" aria-label="intro">
-          <div class="intro-copy">
-            <p class="eyebrow">Pilot 01</p>
-            <h1>단어가 필요한 순간을 먼저 만난다.</h1>
-            <p>
-              공항, 기내, 낯선 도시의 하루 안에서 단어 하나가 자기 자리를
-              갖도록 만든 작은 프로토타입.
-            </p>
-          </div>
-
-          <div class="window-scene" aria-hidden="true">
-            <div class="window-frame"></div>
-            <div class="route-tag">
-              ICN
-              <span class="route-line"></span>
-              SIN
+      <main class="layout">
+        <aside class="sidebar" aria-label="lesson navigation">
+          <p class="lesson-kicker" id="dayLabel">DAY 01</p>
+          <h1 class="lesson-title">단어가 필요한 순간</h1>
+          <div class="progress-line" aria-label="progress">
+            <div class="progress-track">
+              <span class="progress-fill" id="progressFill"></span>
             </div>
+            <span id="progressText">1 / 5</span>
           </div>
-        </section>
-
-        <section class="word-layout" aria-label="word study">
           <nav class="word-list" id="wordList" aria-label="단어 목록"></nav>
+        </aside>
 
-          <article class="study-panel" id="studyPanel">
-            <div class="boarding-strip">
-              <div>
-                <p class="day-label" id="dayLabel">DAY 01</p>
-                <h2 class="hidden-word" id="hiddenWord">단어는 아직 숨겨져 있어요</h2>
-              </div>
-              <div class="stamp">BOARDING</div>
+        <section class="content" aria-label="word study">
+          <article class="study-card">
+            <div class="hero-window">
+              <div class="stamp">Cabin<br />Crew Diary</div>
+              <div class="word-chip" id="wordChip">WORD 01</div>
+              <h2 class="word-heading" id="wordText">available</h2>
+              <p class="word-meaning" id="koreanText">이용 가능한, 시간이 되는</p>
             </div>
 
-            <div class="panel-body">
-              <p class="section-label">Scene</p>
-              <p class="story" id="storyText"></p>
+            <div class="card-body">
+              <section class="section">
+                <p class="section-label">Scene</p>
+                <p class="story" id="storyText"></p>
+              </section>
 
-              <p class="sentence" id="sentenceText"></p>
-
-              <div class="reveal-row">
-                <button class="primary-button" id="revealButton" type="button">
-                  단어 공개
-                </button>
-                <button class="ghost-button" id="prevButton" type="button">
-                  이전
-                </button>
-                <button class="ghost-button" id="nextButton" type="button">
-                  다음
-                </button>
-              </div>
-
-              <div class="revealed" id="revealedPanel" hidden>
-                <div class="word-reveal">
-                  <strong id="wordText"></strong>
-                  <span id="koreanText"></span>
-                </div>
-
-                <div>
-                  <p class="section-label">Feeling</p>
-                  <p class="feeling" id="feelingText"></p>
-                </div>
-
-                <div>
-                  <p class="section-label">TOEIC Phrases</p>
-                  <ul class="phrases" id="phraseList"></ul>
-                </div>
-
-                <div class="quiz">
-                  <p id="quizText"></p>
-                  <button class="ghost-button" id="answerButton" type="button">
-                    정답 보기
+              <section class="section">
+                <div class="actions">
+                  <p class="section-label">Sentence</p>
+                  <button class="ghost-button" id="sentenceButton" type="button">
+                    문장 보기
                   </button>
-                  <p class="quiz-answer" id="answerText" hidden></p>
+                </div>
+                <div class="sentence-box" id="sentenceBox">
+                  <span class="sentence-hidden" id="sentenceText"></span>
+                </div>
+              </section>
+
+              <section class="section">
+                <p class="section-label">Feeling</p>
+                <p class="feeling" id="feelingText"></p>
+              </section>
+
+              <section class="section">
+                <p class="section-label">Quiz</p>
+                <p class="quiz-copy" id="quizText"></p>
+                <div class="quiz-options" id="quizOptions"></div>
+              </section>
+
+              <div class="bottom-bar">
+                <p class="section-label">TOEIC Phrases</p>
+                <ul class="phrases" id="phraseList"></ul>
+                <div class="actions">
+                  <button class="ghost-button" id="prevButton" type="button">이전</button>
+                  <span class="word-count" id="wordCount">01 / 05</span>
+                  <button class="primary-button" id="nextButton" type="button">다음 단어</button>
                 </div>
               </div>
             </div>
           </article>
         </section>
-
-        <p class="footer-note">
-          Prototype build. 다음 버전에서는 30개 단어, 학습 체크, PDF 출력용
-          레이아웃을 붙일 예정.
-        </p>
       </main>
     </div>
 
@@ -629,35 +701,27 @@
           korean: "이용 가능한, 시간이 되는",
           day: "DAY 01",
           scene:
-            "새벽 5시 20분, 인천공항 briefing room의 불은 아직 차갑게 켜져 있었다. 지윤은 유니폼 재킷 단추를 한 번 만지고, 작은 캐리어를 의자 옆에 세웠다.\n\n오늘은 싱가포르행 첫 국제선 실습 비행이었다. 탑승이 시작되자 한 가족이 조심스럽게 다가왔다. 어린아이는 엄마 손을 꼭 잡고 있었고, 아빠는 떨어진 좌석 번호가 적힌 탑승권 두 장을 들고 있었다.\n\n“혹시 창가 쪽에 같이 앉을 수 있는 자리가 있을까요?”\n\n지윤은 좌석표를 확인했다. 비행기는 거의 찼지만, 뒤쪽 창가 줄에 두 자리가 비어 있었다. 누군가를 억지로 움직이는 것도 아니고, 규정을 어기는 것도 아니었다. 그 자리는 지금 쓸 수 있도록 열려 있었다.\n\n그녀는 미소를 지으며 말했다.",
+            "새벽 5시 20분, 인천공항 briefing room의 불은 아직 차갑게 켜져 있었다. 지윤은 유니폼 재킷 단추를 한 번 만지고, 작은 캐리어를 의자 옆에 세웠다.\n\n오늘은 싱가포르행 첫 국제선 실습 비행이었다. 탑승이 시작되자 한 가족이 조심스럽게 다가왔다. 어린아이는 엄마 손을 꼭 잡고 있었고, 아빠는 떨어진 좌석 번호가 적힌 탑승권 두 장을 들고 있었다.\n\n“혹시 창가 쪽에 같이 앉을 수 있는 자리가 있을까요?”\n\n지윤은 좌석표를 확인했다. 비행기는 거의 찼지만, 뒤쪽 창가 줄에 두 자리가 비어 있었다. 그 자리는 지금 쓸 수 있도록 열려 있었다.",
           sentence: "There are two window seats available in row 34.",
           feeling:
-            "available은 누군가가 지금 사용할 수 있도록 비어 있고 열려 있는 상태예요. 좌석, 시간, 자료, 상품이 '쓸 수 있는 상태'로 놓여 있는 느낌.",
-          phrases: [
-            "available seats",
-            "available upon request",
-            "available at the front desk",
-            "available for purchase",
-          ],
+            "작은 좌석표 위에서 available은 '누군가가 지금 쓸 수 있도록 비어 있고 열려 있는 상태'로 느껴져요.",
+          phrases: ["available seats", "available upon request", "available for purchase"],
           quiz: "Extra blankets are _____ upon request.",
-          answer: "available",
+          options: ["준비된", "가능한", "복잡한", "유명한"],
+          answer: "가능한",
         },
         {
           word: "confirm",
           korean: "확인하다, 확정하다",
           day: "DAY 02",
           scene:
-            "파리행 비행 전날 밤, 지윤은 호텔 방 책상에 앉아 태블릿을 켰다. 창밖에는 비가 가늘게 내리고 있었고, 침대 위에는 내일 입을 유니폼이 반듯하게 걸려 있었다.\n\n스케줄 앱에는 출발 시간이 적혀 있었지만, 그녀는 바로 잠들 수 없었다. 공항까지 가는 crew bus 시간이 바뀌었다는 메시지를 본 것 같았기 때문이다.\n\n그녀는 crew coordinator에게 메시지를 보냈다.\n\n“내일 픽업 시간이 6시 10분이 맞나요?”\n\n몇 분 뒤 답장이 왔다. 6시 10분, 호텔 로비, 여권 지참. 흐릿하던 정보가 다시 단단해졌다. 이제 더 이상 추측이 아니었다. 맞는 정보로 확인된 것이다.\n\n지윤은 알람을 맞추고 작은 안도의 숨을 내쉬었다.",
+            "파리행 비행 전날 밤, 지윤은 호텔 방 책상에 앉아 태블릿을 켰다. 창밖에는 비가 가늘게 내리고 있었고, 침대 위에는 내일 입을 유니폼이 반듯하게 걸려 있었다.\n\n스케줄 앱에는 출발 시간이 적혀 있었지만, 그녀는 바로 잠들 수 없었다. 공항까지 가는 crew bus 시간이 바뀌었다는 메시지를 본 것 같았기 때문이다.\n\n그녀는 crew coordinator에게 메시지를 보냈다.\n\n“내일 픽업 시간이 6시 10분이 맞나요?”\n\n몇 분 뒤 답장이 왔다. 6시 10분, 호텔 로비, 여권 지참. 흐릿하던 정보가 다시 단단해졌다.",
           sentence: "The crew coordinator confirmed the pickup time for 6:10 a.m.",
           feeling:
-            "confirm은 불확실하던 것을 맞다고 확인해주는 느낌이에요. 예약, 시간, 장소, 참석 여부가 공중에 떠 있다가 '맞습니다' 하고 고정되는 순간.",
-          phrases: [
-            "confirm a reservation",
-            "confirm an appointment",
-            "confirm the schedule",
-            "confirm receipt",
-          ],
+            "confirm은 공중에 떠 있던 정보가 '맞다'고 단단히 고정되는 순간이에요. 예약, 시간, 장소가 불확실함에서 빠져나옵니다.",
+          phrases: ["confirm a reservation", "confirm the schedule", "confirm receipt"],
           quiz: "Please _____ your reservation by Friday.",
+          options: ["confirm", "delay", "serve", "lose"],
           answer: "confirm",
         },
         {
@@ -665,17 +729,13 @@
           korean: "지연, 지연시키다",
           day: "DAY 03",
           scene:
-            "탑승구 앞 전광판의 시간이 갑자기 바뀌었다. 지윤은 승객들의 얼굴이 동시에 굳어지는 걸 보았다. 원래 10시 40분 출발이던 항공편 옆에 새로운 시간이 떴다.\n\n12:05.\n\n처음에는 작은 웅성거림이었다. 곧 누군가가 연결편을 놓칠까 봐 걱정했고, 아이를 안은 승객은 우유를 어디서 데울 수 있냐고 물었다. 비행기는 아직 활주로에 있지도 않았다. 정비팀이 마지막 점검을 하고 있었다.\n\n지윤은 안내 데스크 옆에 서서 같은 말을 여러 번 반복했다. 이유를 설명하고, 가능한 연결편 정보를 확인하고, 기다리는 동안 이용할 수 있는 라운지 위치를 알려줬다.\n\n출발은 사라진 게 아니었다. 다만 시간이 뒤로 밀린 것이다.",
+            "탑승구 앞 전광판의 시간이 갑자기 바뀌었다. 원래 10시 40분 출발이던 항공편 옆에 새로운 시간이 떴다.\n\n12:05.\n\n처음에는 작은 웅성거림이었다. 곧 누군가가 연결편을 놓칠까 봐 걱정했고, 아이를 안은 승객은 우유를 어디서 데울 수 있냐고 물었다. 비행기는 아직 활주로에 있지도 않았다. 정비팀이 마지막 점검을 하고 있었다.\n\n출발은 사라진 게 아니었다. 다만 시간이 뒤로 밀린 것이다.",
           sentence: "The flight was delayed because of a maintenance check.",
           feeling:
-            "delay는 예정된 일이 없어지는 게 아니라 뒤로 밀리는 느낌이에요. 출발, 배송, 회의, 프로젝트가 원래 자리에서 늦은 시간대로 밀려나는 장면.",
-          phrases: [
-            "flight delay",
-            "delayed departure",
-            "delay the meeting",
-            "due to a delay",
-          ],
+            "delay는 예정된 일이 없어지는 게 아니라 원래 자리에서 뒤로 밀리는 느낌이에요. 출발, 회의, 배송이 늦은 시간대로 밀려납니다.",
+          phrases: ["flight delay", "delayed departure", "due to a delay"],
           quiz: "The departure was _____ due to bad weather.",
+          options: ["delayed", "available", "valid", "nearby"],
           answer: "delayed",
         },
         {
@@ -683,17 +743,13 @@
           korean: "수하물",
           day: "DAY 04",
           scene:
-            "도착 후 수하물 벨트 앞은 조금 지쳐 있었다. 긴 비행을 마친 승객들은 자기 캐리어가 나오기를 기다리며 휴대폰을 확인하거나, 아이를 달래거나, 목을 길게 빼고 벨트 안쪽을 바라봤다.\n\n한 승객이 지윤에게 다가왔다. 그의 손에는 수하물표가 있었고, 얼굴에는 잠을 거의 못 잔 사람의 피곤함이 묻어 있었다.\n\n“제 가방이 아직 안 나왔어요.”\n\n지윤은 표의 번호를 보고 ground staff에게 연결했다. 캐리어는 다른 카트에 실려 잠시 늦게 도착하는 중이었다. 몇 분 뒤 검은색 가방 하나가 벨트 위로 올라왔다. 승객은 손잡이에 묶인 파란 리본을 보고 안도의 표정을 지었다.\n\n그에게 그 가방은 그냥 물건이 아니었다. 출장 자료, 갈아입을 셔츠, 선물, 여행의 작은 안전감이 들어 있는 자기 짐이었다.",
+            "도착 후 수하물 벨트 앞은 조금 지쳐 있었다. 긴 비행을 마친 승객들은 자기 캐리어가 나오기를 기다리며 휴대폰을 확인하거나, 아이를 달래거나, 목을 길게 빼고 벨트 안쪽을 바라봤다.\n\n한 승객이 지윤에게 다가왔다. 그의 손에는 수하물표가 있었고, 얼굴에는 잠을 거의 못 잔 사람의 피곤함이 묻어 있었다.\n\n“제 가방이 아직 안 나왔어요.”\n\n몇 분 뒤 검은색 가방 하나가 벨트 위로 올라왔다. 승객은 손잡이에 묶인 파란 리본을 보고 안도의 표정을 지었다.",
           sentence: "A passenger was waiting for his baggage at the carousel.",
           feeling:
-            "baggage는 비행기나 여행에서 맡기거나 찾는 짐이에요. 토익에서는 공항, 호텔, 운송 상황에서 자주 나오고 luggage와 거의 비슷하게 쓰여요.",
-          phrases: [
-            "baggage claim",
-            "checked baggage",
-            "excess baggage",
-            "baggage allowance",
-          ],
+            "baggage는 여행 중 맡기고 찾는 짐이에요. 안에는 옷뿐 아니라 출장 자료, 선물, 여행의 작은 안전감도 들어 있습니다.",
+          phrases: ["baggage claim", "checked baggage", "baggage allowance"],
           quiz: "Passengers can collect their _____ at carousel 5.",
+          options: ["baggage", "boarding", "coffee", "schedule"],
           answer: "baggage",
         },
         {
@@ -701,43 +757,52 @@
           korean: "미리, 사전에",
           day: "DAY 05",
           scene:
-            "첫 장거리 비행을 앞둔 밤, 지윤은 침대에 눕지 못하고 작은 노트를 펼쳤다. 내일은 아이를 동반한 가족 승객이 많고, 채식 식사를 신청한 승객도 있었다. 사무장은 briefing 때 특별 요청을 다시 확인하자고 했다.\n\n지윤은 승객 명단 옆에 표시를 해두었다. 유아용 벨트가 필요한 좌석, 휠체어 지원이 필요한 승객, 특별 기내식이 실릴 galley 위치. 아직 비행은 시작되지 않았지만, 그녀는 이미 내일의 작은 혼란을 조금씩 줄이고 있었다.\n\n다음 날, 한 승객이 채식 식사를 받을 수 있냐고 묻자 지윤은 당황하지 않았다. 이미 명단에서 확인했고, 식사 카트의 위치도 알고 있었다.\n\n미리 봐둔 덕분에, 그녀의 대답은 흔들리지 않았다.",
+            "첫 장거리 비행을 앞둔 밤, 지윤은 침대에 눕지 못하고 작은 노트를 펼쳤다. 내일은 아이를 동반한 가족 승객이 많고, 채식 식사를 신청한 승객도 있었다.\n\n지윤은 승객 명단 옆에 표시를 해두었다. 유아용 벨트가 필요한 좌석, 휠체어 지원이 필요한 승객, 특별 기내식이 실릴 galley 위치.\n\n아직 비행은 시작되지 않았지만, 그녀는 이미 내일의 작은 혼란을 조금씩 줄이고 있었다.",
           sentence: "She checked the special meal requests in advance.",
           feeling:
-            "in advance는 일이 닥치기 전에 미리 해두는 느낌이에요. 회의, 예약, 요청, 준비가 실제 순간보다 앞쪽에서 먼저 처리되는 장면.",
-          phrases: [
-            "pay in advance",
-            "book in advance",
-            "notify us in advance",
-            "prepare in advance",
-          ],
+            "in advance는 일이 닥치기 전에 앞쪽에서 미리 처리해두는 느낌이에요. 실제 순간이 오기 전에 혼란을 덜어냅니다.",
+          phrases: ["book in advance", "notify us in advance", "prepare in advance"],
           quiz: "Please notify the airline _____ if you need special assistance.",
+          options: ["on time", "in advance", "at the gate", "because of"],
           answer: "in advance",
         },
       ];
 
       const state = {
         index: Number(localStorage.getItem("cabin-vocab-index") || 0),
-        revealed: false,
+        sentenceShown: false,
       };
 
       const wordList = document.querySelector("#wordList");
       const progressText = document.querySelector("#progressText");
+      const progressFill = document.querySelector("#progressFill");
       const dayLabel = document.querySelector("#dayLabel");
-      const hiddenWord = document.querySelector("#hiddenWord");
-      const storyText = document.querySelector("#storyText");
-      const sentenceText = document.querySelector("#sentenceText");
-      const revealedPanel = document.querySelector("#revealedPanel");
+      const wordChip = document.querySelector("#wordChip");
       const wordText = document.querySelector("#wordText");
       const koreanText = document.querySelector("#koreanText");
+      const storyText = document.querySelector("#storyText");
+      const sentenceText = document.querySelector("#sentenceText");
+      const sentenceButton = document.querySelector("#sentenceButton");
       const feelingText = document.querySelector("#feelingText");
-      const phraseList = document.querySelector("#phraseList");
       const quizText = document.querySelector("#quizText");
-      const answerText = document.querySelector("#answerText");
-      const revealButton = document.querySelector("#revealButton");
-      const answerButton = document.querySelector("#answerButton");
+      const quizOptions = document.querySelector("#quizOptions");
+      const phraseList = document.querySelector("#phraseList");
       const prevButton = document.querySelector("#prevButton");
       const nextButton = document.querySelector("#nextButton");
+      const wordCount = document.querySelector("#wordCount");
+
+      function twoDigit(number) {
+        return String(number).padStart(2, "0");
+      }
+
+      function moveCardIntoView() {
+        requestAnimationFrame(() => {
+          document.querySelector(".study-card").scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        });
+      }
 
       function renderTabs() {
         wordList.innerHTML = "";
@@ -746,67 +811,85 @@
           button.type = "button";
           button.className = `word-tab${index === state.index ? " active" : ""}`;
           button.innerHTML = `
-            <span class="word-number">${String(index + 1).padStart(2, "0")}</span>
+            <span class="word-number">${twoDigit(index + 1)}</span>
             <span>
               <span class="word-name">${entry.word}</span>
               <span class="word-korean">${entry.korean}</span>
             </span>
+            <span class="plane-icon" aria-hidden="true">${index === state.index ? "✈" : ""}</span>
           `;
           button.addEventListener("click", () => {
             state.index = index;
-            state.revealed = false;
+            state.sentenceShown = false;
             localStorage.setItem("cabin-vocab-index", String(state.index));
             render();
+            moveCardIntoView();
           });
           wordList.appendChild(button);
         });
       }
 
+      function renderQuiz(entry) {
+        quizOptions.innerHTML = "";
+        entry.options.forEach((option) => {
+          const item = document.createElement("div");
+          item.className = `quiz-option${option === entry.answer ? " correct" : ""}`;
+          item.textContent = option;
+          quizOptions.appendChild(item);
+        });
+      }
+
       function render() {
         const entry = words[state.index];
-        progressText.textContent = `${state.index + 1} / ${words.length}`;
+        const current = state.index + 1;
+        const progress = (current / words.length) * 100;
+
+        progressText.textContent = `${current} / ${words.length}`;
+        progressFill.style.setProperty("--progress", `${progress}%`);
         dayLabel.textContent = entry.day;
-        hiddenWord.textContent = state.revealed ? entry.word : "단어는 아직 숨겨져 있어요";
-        storyText.textContent = entry.scene;
-        sentenceText.textContent = entry.sentence;
+        wordChip.textContent = `WORD ${twoDigit(current)}`;
         wordText.textContent = entry.word;
         koreanText.textContent = entry.korean;
+        storyText.textContent = entry.scene;
+        sentenceText.textContent = state.sentenceShown
+          ? entry.sentence
+          : "••••••••••••••••••••••••••••";
+        sentenceText.className = state.sentenceShown ? "" : "sentence-hidden";
+        sentenceButton.textContent = state.sentenceShown ? "문장 숨기기" : "문장 보기";
         feelingText.textContent = entry.feeling;
         quizText.textContent = entry.quiz;
-        answerText.textContent = entry.answer;
-        answerText.hidden = true;
-        revealedPanel.hidden = !state.revealed;
-        revealButton.textContent = state.revealed ? "다시 숨기기" : "단어 공개";
+        wordCount.textContent = `${twoDigit(current)} / ${twoDigit(words.length)}`;
+
         phraseList.innerHTML = "";
         entry.phrases.forEach((phrase) => {
           const item = document.createElement("li");
           item.textContent = phrase;
           phraseList.appendChild(item);
         });
+
+        renderQuiz(entry);
         renderTabs();
       }
 
-      revealButton.addEventListener("click", () => {
-        state.revealed = !state.revealed;
+      sentenceButton.addEventListener("click", () => {
+        state.sentenceShown = !state.sentenceShown;
         render();
-      });
-
-      answerButton.addEventListener("click", () => {
-        answerText.hidden = !answerText.hidden;
       });
 
       prevButton.addEventListener("click", () => {
         state.index = (state.index - 1 + words.length) % words.length;
-        state.revealed = false;
+        state.sentenceShown = false;
         localStorage.setItem("cabin-vocab-index", String(state.index));
         render();
+        moveCardIntoView();
       });
 
       nextButton.addEventListener("click", () => {
         state.index = (state.index + 1) % words.length;
-        state.revealed = false;
+        state.sentenceShown = false;
         localStorage.setItem("cabin-vocab-index", String(state.index));
         render();
+        moveCardIntoView();
       });
 
       render();
