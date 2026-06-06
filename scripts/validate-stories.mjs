@@ -14,7 +14,7 @@ stories.forEach((story, index) => {
   const number = String(index + 1).padStart(3, "0");
   const quoteCount = (body.match(/"/g) || []).length / 2;
 
-  if (body.length < 650) {
+  if (body.length < 750) {
     failures.push(`${number}: body too short (${body.length})`);
   }
 

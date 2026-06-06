@@ -36,7 +36,7 @@ function validateStory(story) {
     failures.push(`paragraph count ${story.paragraphs?.length ?? 0}`);
   }
 
-  if (body.length < 650) {
+  if (body.length < 750) {
     failures.push(`body too short (${body.length})`);
   }
 
