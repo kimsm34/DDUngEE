@@ -6,25 +6,24 @@
     <title>Cabin Vocabulary</title>
     <meta
       name="description"
-      content="승무원 세계관으로 토익 단어를 장면처럼 익히는 작은 단어장"
+      content="승무원 세계관으로 토익 단어를 긴 장면처럼 익히는 모바일 단어장"
     />
     <style>
       :root {
         color-scheme: light;
-        --ink: #12233d;
-        --muted: #6c7480;
-        --paper: #fbf7ef;
-        --paper-deep: #f3eadc;
-        --surface: #fffdf8;
-        --line: #e3dbcd;
-        --navy: #12345a;
-        --navy-2: #1f5a96;
-        --sky: #dcebf3;
-        --sky-2: #eef6f8;
-        --coral: #ee765e;
-        --gold: #bc8f3a;
-        --shadow: 0 18px 45px rgba(37, 48, 62, 0.12);
-        --soft-shadow: 0 10px 26px rgba(37, 48, 62, 0.08);
+        --ink: #14243a;
+        --muted: #687384;
+        --paper: #fbf6ec;
+        --paper-2: #fffdf8;
+        --surface: #fffaf2;
+        --line: #e6ddce;
+        --navy: #14385f;
+        --blue: #2f6b9e;
+        --sky: #dfeff5;
+        --coral: #e7745d;
+        --gold: #b88939;
+        --green: #2d7c6d;
+        --shadow: 0 16px 44px rgba(27, 42, 61, 0.11);
       }
 
       * {
@@ -38,8 +37,8 @@
       body {
         margin: 0;
         background:
-          linear-gradient(115deg, rgba(220, 235, 243, 0.52), transparent 42%),
-          linear-gradient(180deg, #fffdf8 0, var(--paper) 460px);
+          linear-gradient(180deg, rgba(223, 239, 245, 0.58), transparent 250px),
+          var(--paper);
         color: var(--ink);
         font-family:
           ui-sans-serif,
@@ -48,14 +47,14 @@
           BlinkMacSystemFont,
           "Segoe UI",
           sans-serif;
-        line-height: 1.65;
+        line-height: 1.72;
       }
 
       button {
         font: inherit;
       }
 
-      .shell {
+      .app {
         min-height: 100vh;
       }
 
@@ -63,40 +62,39 @@
         position: sticky;
         top: 0;
         z-index: 20;
-        border-bottom: 1px solid rgba(18, 52, 90, 0.12);
-        background: rgba(255, 253, 248, 0.9);
+        border-bottom: 1px solid rgba(20, 56, 95, 0.12);
+        background: rgba(255, 253, 248, 0.92);
         backdrop-filter: blur(18px);
       }
 
       .topbar-inner {
-        height: 74px;
-        max-width: 1380px;
+        max-width: 1120px;
+        min-height: 68px;
         margin: 0 auto;
-        padding: 0 28px;
+        padding: 12px 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 18px;
+        gap: 14px;
       }
 
       .brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 11px;
         min-width: 0;
       }
 
       .brand-mark {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         display: grid;
         place-items: center;
         border: 2px solid var(--navy);
-        color: var(--navy);
         background: #fff;
+        color: var(--navy);
         font-family: Georgia, "Times New Roman", serif;
-        font-size: 1.05rem;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 0;
       }
 
@@ -104,76 +102,78 @@
         margin: 0;
         color: var(--navy);
         font-family: Georgia, "Times New Roman", serif;
-        font-size: 1.22rem;
-        font-weight: 800;
+        font-size: 1.15rem;
+        font-weight: 900;
         line-height: 1.05;
       }
 
       .brand-subtitle {
-        margin: 4px 0 0;
+        margin: 3px 0 0;
         color: var(--muted);
-        font-size: 0.82rem;
+        font-size: 0.78rem;
         line-height: 1.2;
       }
 
-      .avatar {
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        border: 1px solid rgba(18, 52, 90, 0.16);
-        background: linear-gradient(135deg, #f9d2bf, #f7ead2 54%, #dbeaf3);
+      .top-progress {
+        min-width: max-content;
         color: var(--navy);
         font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.9rem;
         font-weight: 900;
       }
 
-      .layout {
-        max-width: 1380px;
+      .page {
+        max-width: 1120px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 318px minmax(0, 1fr);
-        min-height: calc(100vh - 74px);
+        grid-template-columns: minmax(0, 680px);
+        justify-content: center;
+        gap: 22px;
+        padding: 18px 14px 42px;
       }
 
-      .sidebar {
-        border-right: 1px solid rgba(18, 52, 90, 0.12);
-        padding: 44px 24px 28px 26px;
+      .lesson-strip {
+        display: grid;
+        gap: 12px;
       }
 
-      .lesson-kicker {
+      .reader-intro {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: end;
+        padding: 4px 2px 0;
+      }
+
+      .day-label {
         margin: 0;
-        color: #526070;
+        color: var(--green);
         font-family: Georgia, "Times New Roman", serif;
-        font-size: 0.82rem;
-        font-weight: 800;
+        font-size: 0.8rem;
+        font-weight: 900;
+        letter-spacing: 0.02em;
         text-transform: uppercase;
       }
 
-      .lesson-title {
-        margin: 6px 0 20px;
+      .reader-title {
+        margin: 4px 0 0;
         color: var(--navy);
-        font-size: 1.42rem;
+        font-size: clamp(1.5rem, 7vw, 2.3rem);
         line-height: 1.15;
         letter-spacing: 0;
       }
 
-      .progress-line {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 14px;
-        align-items: center;
-        margin-bottom: 30px;
-        color: #637184;
-        font-size: 0.86rem;
-        font-weight: 800;
+      .progress-chip {
+        border: 1px solid rgba(20, 56, 95, 0.14);
+        background: rgba(255, 253, 248, 0.8);
+        padding: 8px 10px;
+        color: var(--navy);
+        font-weight: 900;
       }
 
       .progress-track {
         height: 3px;
-        background: rgba(18, 52, 90, 0.12);
-        overflow: hidden;
+        background: rgba(20, 56, 95, 0.13);
       }
 
       .progress-fill {
@@ -183,203 +183,163 @@
         background: var(--navy);
       }
 
-      .word-list {
+      .episode-tabs {
         display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(176px, 1fr);
         gap: 10px;
+        overflow-x: auto;
+        padding: 2px 2px 8px;
+        scrollbar-width: thin;
       }
 
-      .word-tab {
+      .episode-tab {
         position: relative;
-        width: 100%;
-        min-height: 78px;
-        border: 1px solid rgba(18, 52, 90, 0.12);
-        background: rgba(255, 253, 248, 0.78);
+        min-height: 74px;
+        border: 1px solid rgba(20, 56, 95, 0.13);
+        background: rgba(255, 253, 248, 0.86);
         color: var(--ink);
-        padding: 14px 40px 14px 16px;
-        display: grid;
-        grid-template-columns: 42px 1fr;
-        gap: 12px;
-        align-items: center;
+        padding: 12px 14px 12px 16px;
         text-align: left;
         cursor: pointer;
-        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
       }
 
-      .word-tab::before,
-      .word-tab::after {
+      .episode-tab::before,
+      .episode-tab::after {
         content: "";
         position: absolute;
         top: 50%;
-        width: 10px;
+        width: 9px;
         height: 18px;
         background: var(--paper);
-        border: 1px solid rgba(18, 52, 90, 0.08);
+        border: 1px solid rgba(20, 56, 95, 0.08);
         transform: translateY(-50%);
       }
 
-      .word-tab::before {
+      .episode-tab::before {
         left: -1px;
         border-left: 0;
         border-radius: 0 12px 12px 0;
       }
 
-      .word-tab::after {
+      .episode-tab::after {
         right: -1px;
         border-right: 0;
         border-radius: 12px 0 0 12px;
       }
 
-      .word-tab:hover,
-      .word-tab:focus-visible {
-        border-color: rgba(18, 52, 90, 0.4);
+      .episode-tab.active {
+        background: linear-gradient(135deg, var(--navy), #255f96);
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .episode-tab:hover,
+      .episode-tab:focus-visible {
+        border-color: rgba(20, 56, 95, 0.45);
         outline: none;
       }
 
-      .word-tab.active {
-        background: linear-gradient(135deg, var(--navy), #1f5a96);
-        color: #fff;
-        border-color: transparent;
-        box-shadow: var(--soft-shadow);
-      }
-
-      .word-tab.active::before,
-      .word-tab.active::after {
-        border-color: transparent;
-      }
-
-      .word-number {
-        width: 36px;
-        height: 36px;
-        display: grid;
-        place-items: center;
-        border: 1px solid currentColor;
-        color: inherit;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 0.86rem;
-        font-weight: 900;
-      }
-
-      .word-name {
+      .tab-day {
         display: block;
         font-family: Georgia, "Times New Roman", serif;
-        font-size: 1.04rem;
+        font-size: 0.78rem;
         font-weight: 900;
-        line-height: 1.12;
       }
 
-      .word-korean {
+      .tab-title {
         display: block;
         margin-top: 3px;
-        opacity: 0.74;
-        font-size: 0.82rem;
-        line-height: 1.25;
+        font-weight: 900;
+        line-height: 1.22;
       }
 
-      .plane-icon {
-        position: absolute;
-        top: 50%;
-        right: 18px;
-        color: currentColor;
-        font-size: 1.05rem;
-        transform: translateY(-50%);
+      .tab-route {
+        display: block;
+        margin-top: 3px;
+        opacity: 0.72;
+        font-size: 0.76rem;
       }
 
-      .content {
-        padding: 26px 28px 42px;
-      }
-
-      .study-card {
-        position: relative;
-        max-width: 1040px;
-        margin: 0 auto;
-        border: 1px solid rgba(18, 52, 90, 0.12);
-        background: rgba(255, 253, 248, 0.95);
-        box-shadow: var(--shadow);
+      .story-card {
         overflow: hidden;
+        border: 1px solid rgba(20, 56, 95, 0.12);
+        background: rgba(255, 253, 248, 0.96);
+        box-shadow: var(--shadow);
       }
 
-      .hero-window {
+      .hero {
         position: relative;
-        min-height: 304px;
-        padding: 30px 36px;
+        min-height: 210px;
+        padding: 22px 20px;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: space-between;
         background:
-          linear-gradient(90deg, rgba(255, 253, 248, 0.96) 0 26%, rgba(255, 253, 248, 0.72) 42%, rgba(255, 253, 248, 0.04) 70%),
-          linear-gradient(180deg, rgba(18, 52, 90, 0.04), rgba(18, 52, 90, 0.1)),
+          linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(255, 253, 248, 0.24) 58%, rgba(255, 253, 248, 0.06)),
           url("assets/flight-sky-window.jpg");
         background-size: cover;
         background-position: center;
       }
 
       .stamp {
-        position: absolute;
-        top: 28px;
-        left: 34px;
-        width: 132px;
-        height: 82px;
-        border: 2px solid rgba(238, 118, 94, 0.72);
-        color: rgba(238, 118, 94, 0.84);
+        width: 92px;
+        height: 58px;
         display: grid;
         place-items: center;
+        border: 2px solid rgba(231, 116, 93, 0.74);
+        border-radius: 50%;
+        color: rgba(231, 116, 93, 0.86);
+        font-size: 0.72rem;
         font-weight: 900;
+        line-height: 1.08;
         text-align: center;
-        line-height: 1.1;
         text-transform: uppercase;
         transform: rotate(-8deg);
-        border-radius: 50%;
-        opacity: 0.9;
       }
 
-      .stamp::after {
-        content: "";
-        position: absolute;
-        right: -80px;
-        top: 20px;
-        width: 110px;
-        height: 42px;
-        border-top: 2px solid rgba(238, 118, 94, 0.4);
-        border-bottom: 2px solid rgba(238, 118, 94, 0.4);
-        transform: rotate(8deg);
-      }
-
-      .word-chip {
+      .route-card {
         width: max-content;
-        margin-bottom: 14px;
-        padding: 4px 12px;
-        border-radius: 999px;
-        background: var(--gold);
-        color: #fff;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 0.76rem;
-        font-weight: 900;
-        text-transform: uppercase;
-      }
-
-      .word-heading {
-        margin: 0;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        border: 1px solid rgba(20, 56, 95, 0.12);
+        background: rgba(255, 253, 248, 0.88);
+        padding: 8px 10px;
         color: var(--navy);
         font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(3.2rem, 7vw, 5.4rem);
-        line-height: 0.9;
-        letter-spacing: 0;
+        font-size: 0.82rem;
+        font-weight: 900;
       }
 
-      .word-meaning {
-        margin: 12px 0 0;
-        color: #4b6b90;
-        font-size: 1.08rem;
-        font-weight: 800;
+      .route-line {
+        position: relative;
+        width: 40px;
+        height: 1px;
+        background: rgba(20, 56, 95, 0.32);
       }
 
-      .card-body {
-        padding: 30px 36px 24px;
+      .route-line::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--coral);
+        transform: translateY(-50%);
+      }
+
+      .story-body {
+        padding: 24px 20px 20px;
       }
 
       .section {
-        padding: 20px 0;
-        border-top: 1px dashed rgba(18, 52, 90, 0.16);
+        padding: 22px 0;
+        border-top: 1px dashed rgba(20, 56, 95, 0.16);
       }
 
       .section:first-child {
@@ -388,7 +348,7 @@
       }
 
       .section-label {
-        margin: 0 0 9px;
+        margin: 0 0 10px;
         color: var(--gold);
         font-family: Georgia, "Times New Roman", serif;
         font-size: 0.78rem;
@@ -397,50 +357,67 @@
         text-transform: uppercase;
       }
 
-      .story,
-      .feeling {
-        max-width: 840px;
+      .episode-title {
+        margin: 0 0 16px;
+        color: var(--navy);
+        font-size: clamp(1.7rem, 8.5vw, 2.75rem);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .scene {
         margin: 0;
-        color: #2b3747;
-        font-size: 1.02rem;
+        color: #2b3745;
+        font-size: 1.03rem;
+        line-height: 1.9;
         white-space: pre-line;
       }
 
-      .sentence-box {
-        max-width: 610px;
-        min-height: 56px;
+      .sentence-panel,
+      .reveal-panel,
+      .quiz-panel {
+        background: var(--surface);
+        border: 1px solid rgba(20, 56, 95, 0.11);
+        padding: 15px;
+      }
+
+      .sentence-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
-        border: 1px solid rgba(18, 52, 90, 0.1);
-        background: linear-gradient(90deg, #e8f2f6, rgba(232, 242, 246, 0.45));
-        padding: 14px 16px;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .sentence-text {
+        margin: 0;
         color: var(--navy);
-        font-size: 1.02rem;
+        font-size: 1.04rem;
         font-weight: 900;
       }
 
       .sentence-hidden {
+        display: block;
+        min-height: 36px;
+        color: #2d638d;
         letter-spacing: 0.18em;
-        color: #2b587c;
         overflow-wrap: anywhere;
       }
 
-      .actions {
+      .button-row {
         display: flex;
-        gap: 8px;
         flex-wrap: wrap;
+        gap: 9px;
         align-items: center;
       }
 
       .primary-button,
       .ghost-button {
-        min-height: 42px;
+        min-height: 44px;
         border: 1px solid var(--navy);
-        padding: 9px 14px;
+        padding: 10px 14px;
         cursor: pointer;
-        font-size: 0.9rem;
+        font-size: 0.92rem;
         font-weight: 900;
       }
 
@@ -458,64 +435,93 @@
       .primary-button:focus-visible,
       .ghost-button:hover,
       .ghost-button:focus-visible {
-        outline: 3px solid rgba(238, 118, 94, 0.24);
+        outline: 3px solid rgba(231, 116, 93, 0.24);
         outline-offset: 2px;
       }
 
-      .quiz-copy {
-        margin: 0 0 14px;
-        color: #2b3747;
-        font-weight: 800;
+      .reveal-panel[hidden],
+      .quiz-panel[hidden] {
+        display: none;
       }
 
-      .quiz-options {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(120px, 1fr));
-        gap: 12px;
-        max-width: 760px;
-      }
-
-      .quiz-option {
-        border: 1px solid rgba(18, 52, 90, 0.14);
-        background: #fff;
-        padding: 9px 10px;
-        color: var(--ink);
-        text-align: center;
-        font-weight: 800;
-      }
-
-      .quiz-option.correct {
-        border-color: rgba(31, 90, 150, 0.32);
-        background: #eef5fb;
+      .word-reveal {
+        margin: 0;
         color: var(--navy);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.9rem, 15vw, 5rem);
+        line-height: 0.9;
+        letter-spacing: 0;
       }
 
-      .bottom-bar {
-        margin-top: 16px;
-        border: 1px solid rgba(18, 52, 90, 0.08);
-        background: rgba(255, 250, 241, 0.9);
-        padding: 14px 16px;
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 18px;
-        align-items: center;
+      .word-meaning {
+        margin: 10px 0 0;
+        color: #4d6d8f;
+        font-weight: 900;
+      }
+
+      .feeling {
+        margin: 18px 0 0;
+        color: #2d3746;
+        font-size: 0.98rem;
+        line-height: 1.78;
       }
 
       .phrases {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin: 0;
+        margin: 18px 0 0;
         padding: 0;
         list-style: none;
       }
 
       .phrases li {
-        background: #edf4f7;
-        color: #315678;
+        background: #edf5f8;
+        color: #315a7a;
         padding: 7px 10px;
         font-size: 0.84rem;
-        font-weight: 800;
+        font-weight: 900;
+      }
+
+      .quiz-copy {
+        margin: 0 0 12px;
+        color: #2d3746;
+        font-weight: 900;
+      }
+
+      .quiz-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .quiz-option {
+        border: 1px solid rgba(20, 56, 95, 0.13);
+        background: #fff;
+        padding: 10px;
+        text-align: center;
+        font-weight: 900;
+      }
+
+      .quiz-option.correct {
+        border-color: rgba(47, 107, 158, 0.32);
+        background: #edf5fb;
+        color: var(--navy);
+      }
+
+      .bottom-nav {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+        margin: 24px -20px -20px;
+        border-top: 1px solid rgba(20, 56, 95, 0.1);
+        background: rgba(255, 253, 248, 0.94);
+        backdrop-filter: blur(16px);
+        padding: 12px 20px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 10px;
+        align-items: center;
       }
 
       .word-count {
@@ -525,186 +531,195 @@
         text-align: center;
       }
 
-      @media (max-width: 980px) {
-        .layout {
-          grid-template-columns: 1fr;
+      @media (min-width: 820px) {
+        .page {
+          grid-template-columns: 320px minmax(0, 740px);
+          align-items: start;
+          padding: 28px 22px 56px;
         }
 
-        .sidebar {
-          border-right: 0;
-          border-bottom: 1px solid rgba(18, 52, 90, 0.12);
-          padding: 26px 18px 18px;
+        .reader-title {
+          font-size: 1.82rem;
         }
 
-        .lesson-title {
-          margin-bottom: 14px;
+        .lesson-strip {
+          position: sticky;
+          top: 92px;
+          align-self: start;
         }
 
-        .progress-line {
-          margin-bottom: 18px;
+        .episode-tabs {
+          grid-auto-flow: row;
+          grid-auto-columns: unset;
+          overflow: visible;
         }
 
-        .word-list {
-          grid-auto-flow: column;
-          grid-auto-columns: minmax(190px, 1fr);
-          overflow-x: auto;
-          padding-bottom: 4px;
+        .hero {
+          min-height: 248px;
+          padding: 28px;
         }
 
-        .word-tab {
-          min-width: 190px;
+        .story-body {
+          padding: 32px 34px 24px;
         }
 
-        .content {
-          padding: 20px 16px 38px;
+        .scene {
+          font-size: 1.07rem;
+        }
+
+        .bottom-nav {
+          margin-left: -34px;
+          margin-right: -34px;
+          margin-bottom: -24px;
+          padding-left: 34px;
+          padding-right: 34px;
         }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 420px) {
         .topbar-inner {
-          height: auto;
-          padding: 14px 16px;
+          padding-left: 14px;
+          padding-right: 14px;
         }
 
-        .avatar {
-          display: none;
+        .brand-title {
+          font-size: 1.04rem;
         }
 
-        .hero-window {
-          min-height: 244px;
-          padding: 24px 22px;
-          background:
-            linear-gradient(180deg, rgba(255, 253, 248, 0.96) 0 12%, rgba(255, 253, 248, 0.58) 52%, rgba(255, 253, 248, 0.02) 100%),
-            url("assets/flight-sky-window.jpg");
-          background-size: cover;
-          background-position: center;
+        .page {
+          padding-left: 12px;
+          padding-right: 12px;
         }
 
-        .stamp {
-          width: 98px;
-          height: 60px;
-          font-size: 0.78rem;
+        .hero {
+          min-height: 188px;
+          padding: 18px;
         }
 
-        .stamp::after {
-          display: none;
+        .story-body {
+          padding: 22px 18px 18px;
         }
 
-        .word-heading {
-          font-size: clamp(2.7rem, 16vw, 4.2rem);
+        .scene {
+          font-size: 1rem;
+          line-height: 1.86;
         }
 
-        .card-body {
-          padding: 22px 20px 18px;
-        }
-
-        .quiz-options {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        .bottom-bar {
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-
-        .word-count {
-          text-align: left;
+        .episode-title {
+          font-size: clamp(1.55rem, 8vw, 2.2rem);
         }
       }
     </style>
   </head>
   <body>
-    <div class="shell">
+    <div class="app">
       <header class="topbar">
         <div class="topbar-inner">
           <div class="brand">
             <div class="brand-mark" aria-hidden="true">CV</div>
             <div>
               <p class="brand-title">Cabin Vocabulary</p>
-              <p class="brand-subtitle">승무원 세계관 토익 단어장</p>
+              <p class="brand-subtitle">긴 장면으로 익히는 승무원 토익 단어장</p>
             </div>
           </div>
-          <div class="avatar" aria-label="learner profile">J</div>
+          <div class="top-progress" id="topProgress">01 / 05</div>
         </div>
       </header>
 
-      <main class="layout">
-        <aside class="sidebar" aria-label="lesson navigation">
-          <p class="lesson-kicker" id="dayLabel">DAY 01</p>
-          <h1 class="lesson-title">단어가 필요한 순간</h1>
-          <div class="progress-line" aria-label="progress">
-            <div class="progress-track">
-              <span class="progress-fill" id="progressFill"></span>
+      <main class="page">
+        <aside class="lesson-strip" aria-label="episode navigation">
+          <div class="reader-intro">
+            <div>
+              <p class="day-label" id="dayLabel">DAY 01</p>
+              <h1 class="reader-title">오늘의 비행 장면</h1>
             </div>
-            <span id="progressText">1 / 5</span>
+            <div class="progress-chip" id="progressText">1 / 5</div>
           </div>
-          <nav class="word-list" id="wordList" aria-label="단어 목록"></nav>
+          <div class="progress-track">
+            <span class="progress-fill" id="progressFill"></span>
+          </div>
+          <nav class="episode-tabs" id="episodeTabs" aria-label="에피소드 목록"></nav>
         </aside>
 
-        <section class="content" aria-label="word study">
-          <article class="study-card">
-            <div class="hero-window">
-              <div class="stamp">Cabin<br />Crew Diary</div>
-              <div class="word-chip" id="wordChip">WORD 01</div>
-              <h2 class="word-heading" id="wordText">available</h2>
-              <p class="word-meaning" id="koreanText">이용 가능한, 시간이 되는</p>
+        <article class="story-card" id="storyCard">
+          <div class="hero">
+            <div class="stamp">Cabin<br />Diary</div>
+            <div class="route-card">
+              <span id="routeFrom">ICN</span>
+              <span class="route-line" aria-hidden="true"></span>
+              <span id="routeTo">SIN</span>
             </div>
+          </div>
 
-            <div class="card-body">
-              <section class="section">
-                <p class="section-label">Scene</p>
-                <p class="story" id="storyText"></p>
-              </section>
+          <div class="story-body">
+            <section class="section">
+              <p class="section-label">Scene</p>
+              <h2 class="episode-title" id="episodeTitle">창가 두 자리</h2>
+              <p class="scene" id="sceneText"></p>
+            </section>
 
-              <section class="section">
-                <div class="actions">
-                  <p class="section-label">Sentence</p>
+            <section class="section">
+              <div class="sentence-panel">
+                <div class="sentence-top">
+                  <p class="section-label">Actual Sentence</p>
                   <button class="ghost-button" id="sentenceButton" type="button">
                     문장 보기
                   </button>
                 </div>
-                <div class="sentence-box" id="sentenceBox">
-                  <span class="sentence-hidden" id="sentenceText"></span>
-                </div>
-              </section>
-
-              <section class="section">
-                <p class="section-label">Feeling</p>
-                <p class="feeling" id="feelingText"></p>
-              </section>
-
-              <section class="section">
-                <p class="section-label">Quiz</p>
-                <p class="quiz-copy" id="quizText"></p>
-                <div class="quiz-options" id="quizOptions"></div>
-              </section>
-
-              <div class="bottom-bar">
-                <p class="section-label">TOEIC Phrases</p>
-                <ul class="phrases" id="phraseList"></ul>
-                <div class="actions">
-                  <button class="ghost-button" id="prevButton" type="button">이전</button>
-                  <span class="word-count" id="wordCount">01 / 05</span>
-                  <button class="primary-button" id="nextButton" type="button">다음 단어</button>
-                </div>
+                <p class="sentence-text" id="sentenceText"></p>
               </div>
+            </section>
+
+            <section class="section">
+              <div class="button-row">
+                <button class="primary-button" id="revealButton" type="button">
+                  단어 공개
+                </button>
+                <button class="ghost-button" id="quizToggleButton" type="button">
+                  퀴즈 열기
+                </button>
+              </div>
+            </section>
+
+            <section class="reveal-panel" id="revealPanel" hidden>
+              <p class="section-label">Word</p>
+              <h3 class="word-reveal" id="wordText">available</h3>
+              <p class="word-meaning" id="koreanText">이용 가능한, 시간이 되는</p>
+              <p class="feeling" id="feelingText"></p>
+              <ul class="phrases" id="phraseList"></ul>
+            </section>
+
+            <section class="quiz-panel" id="quizPanel" hidden>
+              <p class="section-label">Tiny Quiz</p>
+              <p class="quiz-copy" id="quizText"></p>
+              <div class="quiz-options" id="quizOptions"></div>
+            </section>
+
+            <div class="bottom-nav">
+              <button class="ghost-button" id="prevButton" type="button">이전</button>
+              <span class="word-count" id="wordCount">01 / 05</span>
+              <button class="primary-button" id="nextButton" type="button">
+                다음 장면
+              </button>
             </div>
-          </article>
-        </section>
+          </div>
+        </article>
       </main>
     </div>
 
     <script>
-      const words = [
+      const episodes = [
         {
           word: "available",
           korean: "이용 가능한, 시간이 되는",
           day: "DAY 01",
+          title: "창가 두 자리",
+          route: ["ICN", "SIN"],
           scene:
-            "새벽 5시 20분, 인천공항 briefing room의 불은 아직 차갑게 켜져 있었다. 지윤은 유니폼 재킷 단추를 한 번 만지고, 작은 캐리어를 의자 옆에 세웠다.\n\n오늘은 싱가포르행 첫 국제선 실습 비행이었다. 탑승이 시작되자 한 가족이 조심스럽게 다가왔다. 어린아이는 엄마 손을 꼭 잡고 있었고, 아빠는 떨어진 좌석 번호가 적힌 탑승권 두 장을 들고 있었다.\n\n“혹시 창가 쪽에 같이 앉을 수 있는 자리가 있을까요?”\n\n지윤은 좌석표를 확인했다. 비행기는 거의 찼지만, 뒤쪽 창가 줄에 두 자리가 비어 있었다. 그 자리는 지금 쓸 수 있도록 열려 있었다.",
+            "새벽 5시 20분, 인천공항 crew briefing room의 불은 아직 차갑게 켜져 있었다. 지윤은 유니폼 재킷 단추를 한 번 만지고, 작은 캐리어를 의자 옆에 세웠다. 오늘은 싱가포르행 첫 국제선 실습 비행이었다.\n\n사무장은 태블릿을 보며 오늘 승객 정보를 설명했다. 어린아이를 동반한 가족, 채식 식사를 신청한 승객, 환승 시간이 짧은 승객. 지윤은 노트 한쪽에 작은 표시를 해두었다. 아직 비행기는 출발하지 않았지만, 기내에서 벌어질 작은 장면들은 벌써 줄을 서서 기다리는 것 같았다.\n\n탑승이 시작되자 게이트 앞의 줄이 천천히 움직였다. 한 가족이 조심스럽게 다가왔다. 아이는 졸린 눈으로 엄마 손을 꼭 잡고 있었고, 아빠는 떨어진 좌석 번호가 적힌 탑승권 두 장을 들고 있었다.\n\n“혹시 창가 쪽에 같이 앉을 수 있는 자리가 있을까요?”\n\n지윤은 좌석표를 확인했다. 비행기는 거의 찼지만, 뒤쪽 창가 줄에 두 자리가 비어 있었다. 이미 누군가의 자리를 빼앗는 것도 아니고, 규정을 억지로 바꾸는 것도 아니었다. 그 자리는 아직 아무도 쓰지 않고 있었고, 지금 누군가에게 열려 있었다.\n\n그녀는 가족을 바라보며 미소를 지었다. 아이는 창밖을 보고 싶어 하는 얼굴이었다. 지윤은 그 순간, 단어 하나가 단순히 '가능하다'가 아니라 누군가의 하루를 조금 편하게 만드는 열린 자리처럼 느껴질 수 있다는 걸 알았다.",
           sentence: "There are two window seats available in row 34.",
           feeling:
-            "작은 좌석표 위에서 available은 '누군가가 지금 쓸 수 있도록 비어 있고 열려 있는 상태'로 느껴져요.",
+            "available은 '쓸 수 있도록 비어 있고 열려 있는 상태'예요. 좌석, 시간, 자료, 상품이 누군가에게 실제로 열려 있는 느낌으로 잡으면 오래 남습니다.",
           phrases: ["available seats", "available upon request", "available for purchase"],
           quiz: "Extra blankets are _____ upon request.",
           options: ["준비된", "가능한", "복잡한", "유명한"],
@@ -714,11 +729,13 @@
           word: "confirm",
           korean: "확인하다, 확정하다",
           day: "DAY 02",
+          title: "호텔 방의 알람",
+          route: ["ICN", "CDG"],
           scene:
-            "파리행 비행 전날 밤, 지윤은 호텔 방 책상에 앉아 태블릿을 켰다. 창밖에는 비가 가늘게 내리고 있었고, 침대 위에는 내일 입을 유니폼이 반듯하게 걸려 있었다.\n\n스케줄 앱에는 출발 시간이 적혀 있었지만, 그녀는 바로 잠들 수 없었다. 공항까지 가는 crew bus 시간이 바뀌었다는 메시지를 본 것 같았기 때문이다.\n\n그녀는 crew coordinator에게 메시지를 보냈다.\n\n“내일 픽업 시간이 6시 10분이 맞나요?”\n\n몇 분 뒤 답장이 왔다. 6시 10분, 호텔 로비, 여권 지참. 흐릿하던 정보가 다시 단단해졌다.",
+            "파리행 비행 전날 밤, 지윤은 호텔 방 책상에 앉아 태블릿을 켰다. 창밖에는 비가 가늘게 내리고 있었고, 침대 위에는 내일 입을 유니폼이 반듯하게 걸려 있었다. 방 안은 조용했지만, 지윤의 머릿속은 아직 공항처럼 붐볐다.\n\n스케줄 앱에는 출발 시간이 적혀 있었다. 하지만 그녀는 바로 잠들 수 없었다. 조금 전 단체 채팅방에서 crew bus 시간이 바뀌었다는 메시지를 본 것 같았기 때문이다. 누군가는 6시라고 했고, 누군가는 6시 10분이라고 했다. 사소해 보이는 10분이었지만, 새벽 픽업에서는 전혀 사소하지 않았다.\n\n그녀는 알람을 5시에 맞추려다가 멈췄다. 혹시 로비에 늦게 내려가면 어떡하지. 혹시 여권을 챙기느라 시간이 더 걸리면 어떡하지. 침대 옆 스탠드 불빛 아래에서, 출발 시간은 적혀 있는데도 아직 마음속에서는 흐릿했다.\n\n지윤은 crew coordinator에게 짧은 메시지를 보냈다.\n\n“내일 픽업 시간이 6시 10분이 맞나요?”\n\n몇 분 뒤 답장이 왔다. 6시 10분. 호텔 로비. 여권 지참. 그 답장을 보는 순간 공중에 떠 있던 정보가 테이블 위에 딱 내려앉았다. 이제 추측이 아니었다. 불안한 기억도 아니었다. 맞는 정보로 확인된 것이었다.\n\n지윤은 알람을 다시 맞추고, 여권을 가방 앞주머니에 넣었다. 그리고 그제야 방 안이 조금 조용해졌다.",
           sentence: "The crew coordinator confirmed the pickup time for 6:10 a.m.",
           feeling:
-            "confirm은 공중에 떠 있던 정보가 '맞다'고 단단히 고정되는 순간이에요. 예약, 시간, 장소가 불확실함에서 빠져나옵니다.",
+            "confirm은 흐릿한 정보를 '맞다'고 단단히 고정하는 느낌이에요. 예약, 시간, 장소, 참석 여부가 불확실함에서 빠져나오는 순간입니다.",
           phrases: ["confirm a reservation", "confirm the schedule", "confirm receipt"],
           quiz: "Please _____ your reservation by Friday.",
           options: ["confirm", "delay", "serve", "lose"],
@@ -728,11 +745,13 @@
           word: "delay",
           korean: "지연, 지연시키다",
           day: "DAY 03",
+          title: "전광판의 시간",
+          route: ["ICN", "BKK"],
           scene:
-            "탑승구 앞 전광판의 시간이 갑자기 바뀌었다. 원래 10시 40분 출발이던 항공편 옆에 새로운 시간이 떴다.\n\n12:05.\n\n처음에는 작은 웅성거림이었다. 곧 누군가가 연결편을 놓칠까 봐 걱정했고, 아이를 안은 승객은 우유를 어디서 데울 수 있냐고 물었다. 비행기는 아직 활주로에 있지도 않았다. 정비팀이 마지막 점검을 하고 있었다.\n\n출발은 사라진 게 아니었다. 다만 시간이 뒤로 밀린 것이다.",
+            "탑승구 앞 전광판의 시간이 갑자기 바뀌었다. 원래 10시 40분 출발이던 항공편 옆에 새로운 시간이 떴다. 12:05.\n\n처음에는 작은 웅성거림이었다. 한 승객은 손목시계를 보고 한숨을 쉬었고, 다른 승객은 바로 휴대폰을 꺼내 환승편 시간을 확인했다. 아이를 안은 승객은 우유를 어디서 데울 수 있냐고 물었다. 비행기는 아직 활주로에 있지도 않았다. 정비팀이 마지막 점검을 하고 있었다.\n\n지윤은 안내 데스크 옆에 섰다. 같은 질문이 다른 얼굴로 계속 다가왔다. 왜 늦어지나요. 얼마나 더 기다려야 하나요. 연결편은 어떻게 되나요. 지윤은 이유를 설명하고, 가능한 연결편 정보를 확인하고, 기다리는 동안 이용할 수 있는 라운지 위치를 알려줬다.\n\n그녀가 가장 조심했던 건 승객들의 실망을 가볍게 다루지 않는 것이었다. 누군가에게 두 시간은 그냥 기다림이 아니라, 놓칠 수 있는 회의였고, 늦어질 수 있는 가족 약속이었고, 피곤한 아이가 더 오래 버텨야 하는 시간이었기 때문이다.\n\n출발은 사라진 게 아니었다. 비행은 취소된 것도 아니었다. 다만 원래 있던 시간에서 뒤쪽으로 밀렸다. 마치 바닥에 그어둔 선이 누군가의 손에 의해 조금 뒤로 옮겨진 것처럼, 모든 사람이 그 새 위치에 맞춰 다시 움직여야 했다.",
           sentence: "The flight was delayed because of a maintenance check.",
           feeling:
-            "delay는 예정된 일이 없어지는 게 아니라 원래 자리에서 뒤로 밀리는 느낌이에요. 출발, 회의, 배송이 늦은 시간대로 밀려납니다.",
+            "delay는 예정된 일이 없어지는 게 아니라 원래 자리에서 뒤로 밀리는 느낌이에요. 출발, 회의, 배송, 프로젝트가 늦은 시간대로 옮겨갑니다.",
           phrases: ["flight delay", "delayed departure", "due to a delay"],
           quiz: "The departure was _____ due to bad weather.",
           options: ["delayed", "available", "valid", "nearby"],
@@ -742,11 +761,13 @@
           word: "baggage",
           korean: "수하물",
           day: "DAY 04",
+          title: "파란 리본의 가방",
+          route: ["SIN", "ICN"],
           scene:
-            "도착 후 수하물 벨트 앞은 조금 지쳐 있었다. 긴 비행을 마친 승객들은 자기 캐리어가 나오기를 기다리며 휴대폰을 확인하거나, 아이를 달래거나, 목을 길게 빼고 벨트 안쪽을 바라봤다.\n\n한 승객이 지윤에게 다가왔다. 그의 손에는 수하물표가 있었고, 얼굴에는 잠을 거의 못 잔 사람의 피곤함이 묻어 있었다.\n\n“제 가방이 아직 안 나왔어요.”\n\n몇 분 뒤 검은색 가방 하나가 벨트 위로 올라왔다. 승객은 손잡이에 묶인 파란 리본을 보고 안도의 표정을 지었다.",
+            "도착 후 수하물 벨트 앞은 조금 지쳐 있었다. 긴 비행을 마친 승객들은 자기 캐리어가 나오기를 기다리며 휴대폰을 확인하거나, 아이를 달래거나, 목을 길게 빼고 벨트 안쪽을 바라봤다. 벨트는 천천히 돌았고, 검은색 캐리어들이 거의 비슷한 얼굴로 하나씩 지나갔다.\n\n한 승객이 지윤에게 다가왔다. 그의 손에는 수하물표가 있었고, 얼굴에는 잠을 거의 못 잔 사람의 피곤함이 묻어 있었다.\n\n“제 가방이 아직 안 나왔어요.”\n\n지윤은 표의 번호를 확인하고 ground staff에게 연결했다. 승객은 애써 침착해 보이려 했지만, 손가락은 수하물표 끝을 계속 접었다 폈다. 그 안에는 출장 자료가 있다고 했다. 내일 아침 바로 필요한 셔츠도 있고, 가족에게 줄 선물도 있다고 했다.\n\n그때 벨트 안쪽에서 검은색 가방 하나가 올라왔다. 손잡이에 파란 리본이 묶여 있었다. 승객은 거의 반사적으로 앞으로 걸어갔다. 리본을 확인하고, 태그를 확인하고, 가방을 들어 올린 뒤에야 얼굴이 풀렸다.\n\n지윤은 그 장면을 보며 생각했다. 여행에서 짐은 그냥 물건이 아니다. 그 안에는 다음 일정, 갈아입을 옷, 누군가에게 전할 마음, 낯선 도시에서 나를 다시 나답게 만들어주는 작은 안전감이 들어 있다.",
           sentence: "A passenger was waiting for his baggage at the carousel.",
           feeling:
-            "baggage는 여행 중 맡기고 찾는 짐이에요. 안에는 옷뿐 아니라 출장 자료, 선물, 여행의 작은 안전감도 들어 있습니다.",
+            "baggage는 공항에서 맡기고 찾는 여행의 짐이에요. luggage와 비슷하지만, 항공/공항 안내에서는 baggage가 아주 자연스럽게 자주 나옵니다.",
           phrases: ["baggage claim", "checked baggage", "baggage allowance"],
           quiz: "Passengers can collect their _____ at carousel 5.",
           options: ["baggage", "boarding", "coffee", "schedule"],
@@ -756,11 +777,13 @@
           word: "in advance",
           korean: "미리, 사전에",
           day: "DAY 05",
+          title: "비행 전날의 작은 표시",
+          route: ["ICN", "LAX"],
           scene:
-            "첫 장거리 비행을 앞둔 밤, 지윤은 침대에 눕지 못하고 작은 노트를 펼쳤다. 내일은 아이를 동반한 가족 승객이 많고, 채식 식사를 신청한 승객도 있었다.\n\n지윤은 승객 명단 옆에 표시를 해두었다. 유아용 벨트가 필요한 좌석, 휠체어 지원이 필요한 승객, 특별 기내식이 실릴 galley 위치.\n\n아직 비행은 시작되지 않았지만, 그녀는 이미 내일의 작은 혼란을 조금씩 줄이고 있었다.",
+            "첫 장거리 비행을 앞둔 밤, 지윤은 침대에 눕지 못하고 작은 노트를 펼쳤다. 창밖은 조용했지만, 내일의 비행은 이미 종이 위에서 조금씩 시작되고 있었다. 아이를 동반한 가족 승객, 휠체어 지원이 필요한 승객, 채식 식사를 신청한 승객, 환승 시간이 짧은 승객.\n\n사무장은 briefing 때 특별 요청을 다시 확인하자고 했다. 지윤은 승객 명단 옆에 작은 표시를 해두었다. 유아용 벨트가 필요한 좌석에는 동그라미를 쳤고, 특별 기내식이 실릴 galley 위치에는 별표를 달았다. 휠체어 지원이 필요한 승객 옆에는 도착 후 연결할 ground staff 이름을 적었다.\n\n아직 아무도 그녀에게 담요를 요청하지 않았다. 아직 식사 카트도 움직이지 않았다. 아직 기내 방송도 시작되지 않았다. 하지만 지윤은 내일 생길 수 있는 작은 혼란들을 오늘 밤 조금씩 줄이고 있었다.\n\n다음 날, 한 승객이 채식 식사가 준비되어 있는지 조심스럽게 물었다. 지윤은 당황하지 않았다. 이미 명단에서 확인했고, 어느 카트에 실려 있는지도 알고 있었다. 그녀는 바로 대답할 수 있었다.\n\n그 순간 지윤은 깨달았다. 미리 해둔 준비는 눈에 잘 띄지 않는다. 하지만 실제 순간이 오면, 그 조용한 준비가 누군가를 기다리게 하지 않는 힘이 된다.",
           sentence: "She checked the special meal requests in advance.",
           feeling:
-            "in advance는 일이 닥치기 전에 앞쪽에서 미리 처리해두는 느낌이에요. 실제 순간이 오기 전에 혼란을 덜어냅니다.",
+            "in advance는 일이 닥치기 전에 앞쪽에서 미리 처리해두는 느낌이에요. 실제 순간이 오기 전에 준비해서 혼란을 줄이는 장면으로 잡으면 좋아요.",
           phrases: ["book in advance", "notify us in advance", "prepare in advance"],
           quiz: "Please notify the airline _____ if you need special assistance.",
           options: ["on time", "in advance", "at the gate", "because of"],
@@ -771,22 +794,31 @@
       const state = {
         index: Number(localStorage.getItem("cabin-vocab-index") || 0),
         sentenceShown: false,
+        revealed: false,
+        quizOpen: false,
       };
 
-      const wordList = document.querySelector("#wordList");
+      const episodeTabs = document.querySelector("#episodeTabs");
+      const topProgress = document.querySelector("#topProgress");
       const progressText = document.querySelector("#progressText");
       const progressFill = document.querySelector("#progressFill");
       const dayLabel = document.querySelector("#dayLabel");
-      const wordChip = document.querySelector("#wordChip");
-      const wordText = document.querySelector("#wordText");
-      const koreanText = document.querySelector("#koreanText");
-      const storyText = document.querySelector("#storyText");
+      const routeFrom = document.querySelector("#routeFrom");
+      const routeTo = document.querySelector("#routeTo");
+      const episodeTitle = document.querySelector("#episodeTitle");
+      const sceneText = document.querySelector("#sceneText");
       const sentenceText = document.querySelector("#sentenceText");
       const sentenceButton = document.querySelector("#sentenceButton");
+      const revealButton = document.querySelector("#revealButton");
+      const revealPanel = document.querySelector("#revealPanel");
+      const wordText = document.querySelector("#wordText");
+      const koreanText = document.querySelector("#koreanText");
       const feelingText = document.querySelector("#feelingText");
+      const phraseList = document.querySelector("#phraseList");
+      const quizToggleButton = document.querySelector("#quizToggleButton");
+      const quizPanel = document.querySelector("#quizPanel");
       const quizText = document.querySelector("#quizText");
       const quizOptions = document.querySelector("#quizOptions");
-      const phraseList = document.querySelector("#phraseList");
       const prevButton = document.querySelector("#prevButton");
       const nextButton = document.querySelector("#nextButton");
       const wordCount = document.querySelector("#wordCount");
@@ -795,79 +827,87 @@
         return String(number).padStart(2, "0");
       }
 
-      function moveCardIntoView() {
+      function moveToStoryTop() {
         requestAnimationFrame(() => {
-          document.querySelector(".study-card").scrollIntoView({
+          document.querySelector("#storyCard").scrollIntoView({
             behavior: "smooth",
             block: "start",
           });
         });
       }
 
+      function selectEpisode(index) {
+        state.index = index;
+        state.sentenceShown = false;
+        state.revealed = false;
+        state.quizOpen = false;
+        localStorage.setItem("cabin-vocab-index", String(state.index));
+        render();
+        moveToStoryTop();
+      }
+
       function renderTabs() {
-        wordList.innerHTML = "";
-        words.forEach((entry, index) => {
+        episodeTabs.innerHTML = "";
+        episodes.forEach((episode, index) => {
           const button = document.createElement("button");
           button.type = "button";
-          button.className = `word-tab${index === state.index ? " active" : ""}`;
+          button.className = `episode-tab${index === state.index ? " active" : ""}`;
           button.innerHTML = `
-            <span class="word-number">${twoDigit(index + 1)}</span>
-            <span>
-              <span class="word-name">${entry.word}</span>
-              <span class="word-korean">${entry.korean}</span>
-            </span>
-            <span class="plane-icon" aria-hidden="true">${index === state.index ? "✈" : ""}</span>
+            <span class="tab-day">${episode.day}</span>
+            <span class="tab-title">${episode.title}</span>
+            <span class="tab-route">${episode.route[0]} → ${episode.route[1]}</span>
           `;
-          button.addEventListener("click", () => {
-            state.index = index;
-            state.sentenceShown = false;
-            localStorage.setItem("cabin-vocab-index", String(state.index));
-            render();
-            moveCardIntoView();
-          });
-          wordList.appendChild(button);
+          button.addEventListener("click", () => selectEpisode(index));
+          episodeTabs.appendChild(button);
         });
       }
 
-      function renderQuiz(entry) {
+      function renderQuiz(episode) {
         quizOptions.innerHTML = "";
-        entry.options.forEach((option) => {
+        episode.options.forEach((option) => {
           const item = document.createElement("div");
-          item.className = `quiz-option${option === entry.answer ? " correct" : ""}`;
+          item.className = `quiz-option${option === episode.answer ? " correct" : ""}`;
           item.textContent = option;
           quizOptions.appendChild(item);
         });
       }
 
       function render() {
-        const entry = words[state.index];
+        const episode = episodes[state.index];
         const current = state.index + 1;
-        const progress = (current / words.length) * 100;
+        const progress = (current / episodes.length) * 100;
 
-        progressText.textContent = `${current} / ${words.length}`;
+        topProgress.textContent = `${twoDigit(current)} / ${twoDigit(episodes.length)}`;
+        progressText.textContent = `${current} / ${episodes.length}`;
         progressFill.style.setProperty("--progress", `${progress}%`);
-        dayLabel.textContent = entry.day;
-        wordChip.textContent = `WORD ${twoDigit(current)}`;
-        wordText.textContent = entry.word;
-        koreanText.textContent = entry.korean;
-        storyText.textContent = entry.scene;
+        dayLabel.textContent = episode.day;
+        routeFrom.textContent = episode.route[0];
+        routeTo.textContent = episode.route[1];
+        episodeTitle.textContent = episode.title;
+        sceneText.textContent = episode.scene;
         sentenceText.textContent = state.sentenceShown
-          ? entry.sentence
+          ? episode.sentence
           : "••••••••••••••••••••••••••••";
-        sentenceText.className = state.sentenceShown ? "" : "sentence-hidden";
+        sentenceText.className = state.sentenceShown ? "sentence-text" : "sentence-hidden";
         sentenceButton.textContent = state.sentenceShown ? "문장 숨기기" : "문장 보기";
-        feelingText.textContent = entry.feeling;
-        quizText.textContent = entry.quiz;
-        wordCount.textContent = `${twoDigit(current)} / ${twoDigit(words.length)}`;
+        revealButton.textContent = state.revealed ? "단어 숨기기" : "단어 공개";
+        revealPanel.hidden = !state.revealed;
+        wordText.textContent = episode.word;
+        koreanText.textContent = episode.korean;
+        feelingText.textContent = episode.feeling;
+        quizToggleButton.textContent = state.quizOpen ? "퀴즈 닫기" : "퀴즈 열기";
+        quizPanel.hidden = !state.quizOpen;
+        quizText.textContent = episode.quiz;
+        wordCount.textContent = `${twoDigit(current)} / ${twoDigit(episodes.length)}`;
 
         phraseList.innerHTML = "";
-        entry.phrases.forEach((phrase) => {
+        episode.phrases.forEach((phrase) => {
           const item = document.createElement("li");
           item.textContent = phrase;
           phraseList.appendChild(item);
         });
 
-        renderQuiz(entry);
+        renderQuiz(episode);
         renderTabs();
       }
 
@@ -876,20 +916,22 @@
         render();
       });
 
-      prevButton.addEventListener("click", () => {
-        state.index = (state.index - 1 + words.length) % words.length;
-        state.sentenceShown = false;
-        localStorage.setItem("cabin-vocab-index", String(state.index));
+      revealButton.addEventListener("click", () => {
+        state.revealed = !state.revealed;
         render();
-        moveCardIntoView();
+      });
+
+      quizToggleButton.addEventListener("click", () => {
+        state.quizOpen = !state.quizOpen;
+        render();
+      });
+
+      prevButton.addEventListener("click", () => {
+        selectEpisode((state.index - 1 + episodes.length) % episodes.length);
       });
 
       nextButton.addEventListener("click", () => {
-        state.index = (state.index + 1) % words.length;
-        state.sentenceShown = false;
-        localStorage.setItem("cabin-vocab-index", String(state.index));
-        render();
-        moveCardIntoView();
+        selectEpisode((state.index + 1) % episodes.length);
       });
 
       render();
