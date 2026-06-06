@@ -413,14 +413,16 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-end;
-        gap: 8px;
+        align-items: center;
+        gap: 10px;
       }
 
       .sentence-text {
         margin: 0;
         color: var(--navy);
-        font-size: 1.04rem;
+        font-size: 1.08rem;
         font-weight: 900;
+        line-height: 1.55;
       }
 
       .sentence-hidden {
@@ -459,15 +461,115 @@
         color: var(--navy);
       }
 
-      .listen-button {
+      .voice-button {
+        min-height: 40px;
+        border: 1px solid rgba(20, 56, 95, 0.9);
+        background:
+          linear-gradient(135deg, rgba(255, 253, 248, 0.16), transparent 42%),
+          var(--navy);
+        color: #fffdf8;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 7px;
+        padding: 9px 13px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 900;
+        border-radius: 8px;
+        box-shadow: 0 10px 24px rgba(20, 56, 95, 0.18);
       }
 
-      .listen-button svg {
+      .voice-button svg {
         width: 16px;
         height: 16px;
+      }
+
+      .voice-button[aria-pressed="true"] {
+        background:
+          linear-gradient(135deg, rgba(255, 253, 248, 0.18), transparent 42%),
+          var(--coral);
+        border-color: rgba(231, 116, 93, 0.95);
+      }
+
+      .voice-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.48;
+      }
+
+      .auto-voice-toggle {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(20, 56, 95, 0.12);
+        background: rgba(255, 253, 248, 0.74);
+        padding: 7px 9px;
+        color: var(--navy);
+        cursor: pointer;
+        border-radius: 8px;
+        user-select: none;
+      }
+
+      .auto-voice-toggle input {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .toggle-track {
+        width: 34px;
+        height: 20px;
+        display: inline-flex;
+        align-items: center;
+        padding: 2px;
+        background: rgba(20, 56, 95, 0.18);
+        border-radius: 999px;
+        transition: background 160ms ease;
+      }
+
+      .toggle-thumb {
+        width: 16px;
+        height: 16px;
+        background: #fffdf8;
+        border: 1px solid rgba(20, 56, 95, 0.12);
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(20, 56, 95, 0.2);
+        transform: translateX(0);
+        transition: transform 160ms ease;
+      }
+
+      .auto-voice-toggle input:checked + .toggle-track {
+        background: var(--green);
+      }
+
+      .auto-voice-toggle input:checked + .toggle-track .toggle-thumb {
+        transform: translateX(14px);
+      }
+
+      .auto-voice-toggle:has(input:focus-visible) {
+        outline: 3px solid rgba(231, 116, 93, 0.24);
+        outline-offset: 2px;
+      }
+
+      .toggle-copy {
+        display: grid;
+        gap: 1px;
+        line-height: 1.05;
+      }
+
+      .toggle-copy strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.78rem;
+        line-height: 1;
+      }
+
+      .toggle-copy span {
+        color: var(--muted);
+        font-size: 0.68rem;
+        font-weight: 800;
+        white-space: nowrap;
       }
 
       .primary-button:disabled,
@@ -479,7 +581,9 @@
       .primary-button:hover,
       .primary-button:focus-visible,
       .ghost-button:hover,
-      .ghost-button:focus-visible {
+      .ghost-button:focus-visible,
+      .voice-button:hover,
+      .voice-button:focus-visible {
         outline: 3px solid rgba(231, 116, 93, 0.24);
         outline-offset: 2px;
       }
@@ -676,6 +780,20 @@
         .episode-title {
           font-size: clamp(1.55rem, 8vw, 2.2rem);
         }
+
+        .sentence-top {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .sentence-actions {
+          justify-content: flex-start;
+          width: 100%;
+        }
+
+        .auto-voice-toggle {
+          flex: 1 1 165px;
+        }
       }
     </style>
   </head>
@@ -808,7 +926,7 @@
             </section>
 
             <section class="section">
-              <div class="sentence-panel">
+              <div class="sentence-panel" id="sentencePanel">
                 <div class="sentence-top">
                   <div class="section-heading">
                     <svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -817,30 +935,29 @@
                     <p class="section-label">Final Line</p>
                   </div>
                   <div class="sentence-actions">
-                    <button class="ghost-button" id="sentenceButton" type="button">
-                      마지막 문장 보기
-                    </button>
-                    <button class="ghost-button listen-button" id="speakButton" type="button" aria-label="Final Line 영어 음성 듣기" title="Final Line 영어 음성 듣기">
+                    <button class="voice-button" id="speakButton" type="button" aria-label="Final Line 영어 음성 듣기" title="Final Line 영어 음성 듣기">
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <use href="#icon-volume"></use>
                       </svg>
                       <span id="speakLabel">듣기</span>
                     </button>
+                    <label class="auto-voice-toggle" for="autoSpeakToggle" title="켜두면 Final Line이 화면에 들어올 때 자동으로 재생돼요">
+                      <input id="autoSpeakToggle" type="checkbox" />
+                      <span class="toggle-track" aria-hidden="true">
+                        <span class="toggle-thumb"></span>
+                      </span>
+                      <span class="toggle-copy">
+                        <strong>Auto</strong>
+                        <span>문장 도착 시 재생</span>
+                      </span>
+                    </label>
                   </div>
                 </div>
                 <p class="sentence-text" id="sentenceText"></p>
               </div>
             </section>
 
-            <section class="section">
-              <div class="button-row">
-                <button class="primary-button" id="revealButton" type="button">
-                  단어 공개
-                </button>
-              </div>
-            </section>
-
-            <section class="reveal-panel" id="revealPanel" hidden>
+            <section class="reveal-panel" id="revealPanel">
               <div class="section-heading">
                 <svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true">
                   <use href="#icon-word"></use>
@@ -2364,6 +2481,7 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
       const episodes = activeLevel.episodes;
       const legacyIndexStorageKey = "ddungee-toeic-level-1-index";
       const progressStorageKey = "ddungee-toeic-level-1-progress";
+      const autoSpeakStorageKey = "ddungee-toeic-auto-speak";
 
       function clampIndex(index) {
         const numericIndex = Number(index);
@@ -2414,8 +2532,8 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
 
       const state = {
         index: savedProgress.currentIndex,
-        sentenceShown: false,
-        revealed: savedProgress.revealedIndexes.includes(savedProgress.currentIndex),
+        autoSpeak: localStorage.getItem(autoSpeakStorageKey) === "true",
+        autoSpokenIndex: null,
         viewedIndexes: savedProgress.viewedIndexes,
         revealedIndexes: savedProgress.revealedIndexes,
       };
@@ -2435,11 +2553,11 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
       const routeTo = document.querySelector("#routeTo");
       const episodeTitle = document.querySelector("#episodeTitle");
       const sceneText = document.querySelector("#sceneText");
+      const sentencePanel = document.querySelector("#sentencePanel");
       const sentenceText = document.querySelector("#sentenceText");
-      const sentenceButton = document.querySelector("#sentenceButton");
       const speakButton = document.querySelector("#speakButton");
       const speakLabel = document.querySelector("#speakLabel");
-      const revealButton = document.querySelector("#revealButton");
+      const autoSpeakToggle = document.querySelector("#autoSpeakToggle");
       const revealPanel = document.querySelector("#revealPanel");
       const wordText = document.querySelector("#wordText");
       const koreanText = document.querySelector("#koreanText");
@@ -2477,17 +2595,19 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         }
       }
 
-      function speakFinalLine() {
+      function speakFinalLine({ fromAuto = false } = {}) {
         if (!speechApi) {
           return;
         }
 
         if (isSpeaking) {
+          if (fromAuto) {
+            return;
+          }
           stopSpeech();
           return;
         }
 
-        state.sentenceShown = true;
         speechApi.cancel();
 
         const utterance = new SpeechSynthesisUtterance(episodes[state.index].sentence);
@@ -2511,6 +2631,15 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         isSpeaking = true;
         render();
         speechApi.speak(utterance);
+      }
+
+      function maybeAutoSpeak() {
+        if (!speechApi || !state.autoSpeak || isSpeaking || state.autoSpokenIndex === state.index) {
+          return;
+        }
+
+        state.autoSpokenIndex = state.index;
+        speakFinalLine({ fromAuto: true });
       }
 
       if (speechApi) {
@@ -2584,14 +2713,13 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
       }
 
       function getCompletedCount() {
-        return normalizeIndexes(state.revealedIndexes).length;
+        return normalizeIndexes(state.viewedIndexes).length;
       }
 
       function selectEpisode(index) {
         stopSpeech(false);
         state.index = clampIndex(index);
-        state.sentenceShown = false;
-        state.revealed = state.revealedIndexes.includes(state.index);
+        state.autoSpokenIndex = null;
         markViewed(state.index);
         render();
         moveToStoryTop();
@@ -2611,7 +2739,7 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
           button.innerHTML = `
             <span class="level-label">${level.label}</span>
             <span class="level-title">${level.title}</span>
-            <span class="level-status">${isLocked ? `잠김 · ${level.count} words` : `완료 ${completedCount} / ${level.episodes.length}`}</span>
+            <span class="level-status">${isLocked ? `잠김 · ${level.count} words` : `읽음 ${completedCount} / ${level.episodes.length}`}</span>
           `;
           if (!isLocked) {
             button.addEventListener("click", closeDrawer);
@@ -2630,23 +2758,21 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         progressText.textContent = `${current} / ${episodes.length}`;
         progressFill.style.setProperty("--progress", `${progress}%`);
         resumeText.textContent = "진행률";
-        completedText.textContent = `완료 ${completedCount} / ${episodes.length}`;
+        completedText.textContent = `읽음 ${completedCount} / ${episodes.length}`;
         dayLabel.textContent = activeLevel.label;
         routeFrom.textContent = episode.route[0];
         routeTo.textContent = episode.route[1];
         episodeTitle.textContent = episode.title;
         sceneText.textContent = episode.scene;
-        sentenceText.textContent = state.sentenceShown
-          ? episode.sentence
-          : "••••••••••••••••••••••••••••";
-        sentenceText.className = state.sentenceShown ? "sentence-text" : "sentence-hidden";
-        sentenceButton.textContent = state.sentenceShown ? "마지막 문장 숨기기" : "마지막 문장 보기";
+        sentenceText.textContent = episode.sentence;
+        sentenceText.className = "sentence-text";
         speakButton.hidden = !speechApi;
         speakButton.disabled = !speechApi;
         speakButton.setAttribute("aria-pressed", isSpeaking ? "true" : "false");
         speakLabel.textContent = isSpeaking ? "정지" : "듣기";
-        revealButton.textContent = state.revealed ? "단어 숨기기" : "단어 공개";
-        revealPanel.hidden = !state.revealed;
+        autoSpeakToggle.checked = state.autoSpeak;
+        autoSpeakToggle.disabled = !speechApi;
+        revealPanel.hidden = false;
         wordText.textContent = episode.word;
         koreanText.textContent = episode.korean;
         feelingText.textContent = episode.feeling;
@@ -2662,25 +2788,28 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         renderLevels();
       }
 
-      sentenceButton.addEventListener("click", () => {
-        state.sentenceShown = !state.sentenceShown;
-        if (!state.sentenceShown) {
-          stopSpeech(false);
-        }
-        render();
-      });
-
       speakButton.addEventListener("click", speakFinalLine);
 
-      revealButton.addEventListener("click", () => {
-        state.revealed = !state.revealed;
-        if (state.revealed) {
-          markRevealed(state.index);
-        } else {
-          saveProgress();
-        }
+      autoSpeakToggle.addEventListener("change", () => {
+        state.autoSpeak = autoSpeakToggle.checked;
+        localStorage.setItem(autoSpeakStorageKey, String(state.autoSpeak));
         render();
+        if (state.autoSpeak) {
+          maybeAutoSpeak();
+        }
       });
+
+      if ("IntersectionObserver" in window) {
+        const sentenceObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.55)) {
+              maybeAutoSpeak();
+            }
+          },
+          { threshold: [0.55] },
+        );
+        sentenceObserver.observe(sentencePanel);
+      }
 
       prevButton.addEventListener("click", () => {
         selectEpisode((state.index - 1 + episodes.length) % episodes.length);
