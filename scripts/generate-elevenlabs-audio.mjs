@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const indexPath = path.join(repoRoot, "index.html");
+const naturalStoriesPath = path.join(repoRoot, "content", "level-1-natural-stories.js");
 const envPath = path.join(repoRoot, ".env");
 const outputRoot = path.join(repoRoot, "assets", "audio", "level-1");
 
@@ -122,6 +123,25 @@ function extractFinalLines(html) {
   }));
 }
 
+async function loadFinalLines() {
+  const html = await fs.readFile(indexPath, "utf8");
+  const baseLines = extractFinalLines(html);
+
+  try {
+    const naturalBody = await fs.readFile(naturalStoriesPath, "utf8");
+    const naturalLines = [...naturalBody.matchAll(/sentence:\s*`([^`]+)`/g)].map((match) => match[1].trim());
+    if (naturalLines.length === baseLines.length) {
+      return baseLines.map((item, index) => ({ ...item, sentence: naturalLines[index] }));
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+  }
+
+  return baseLines;
+}
+
 async function fileExists(filePath) {
   try {
     await fs.access(filePath);
@@ -172,8 +192,7 @@ async function main() {
   await loadDotEnv();
   const args = parseArgs(process.argv.slice(2));
   const apiKey = process.env.ELEVENLABS_API_KEY;
-  const html = await fs.readFile(indexPath, "utf8");
-  const finalLines = extractFinalLines(html);
+  const finalLines = await loadFinalLines();
   const selectedIndexes = parseRange(args.range, finalLines.length);
   const selectedLines = selectedIndexes.map((number) => finalLines[number - 1]);
 

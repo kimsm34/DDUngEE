@@ -14,6 +14,7 @@ import soundfile as sf
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = REPO_ROOT / "index.html"
+NATURAL_STORIES_PATH = REPO_ROOT / "content" / "level-1-natural-stories.js"
 OUTPUT_ROOT = REPO_ROOT / "assets" / "audio" / "level-1"
 SAMPLE_RATE = 24000
 
@@ -53,6 +54,12 @@ def extract_final_lines(html):
         index = int(raw_index)
         if 0 <= index < len(base_lines):
             base_lines[index] = sentence.strip()
+
+    if NATURAL_STORIES_PATH.exists():
+        natural_body = NATURAL_STORIES_PATH.read_text(encoding="utf-8")
+        natural_lines = re.findall(r"sentence:\s*`([^`]+)`", natural_body)
+        if len(natural_lines) == len(base_lines):
+            base_lines = [line.strip() for line in natural_lines]
 
     return [
         {
