@@ -1,6 +1,6 @@
-# Cabin Vocabulary
+# DDungEE Cabin Diary
 
-승무원을 꿈꾸는 학습자를 위한 토익 단어 스토리 프로토타입입니다.
+승무원을 꿈꾸는 정민이를 위한 토익 단어 스토리 프로토타입입니다.
 
 ## Prototype
 
