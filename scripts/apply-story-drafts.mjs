@@ -5,12 +5,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const storyPath = path.join(repoRoot, "content", "level-1-natural-stories.js");
-const draftFiles = [
-  "drafts/rewrite-001-025.js",
-  "drafts/rewrite-026-050.js",
-  "drafts/rewrite-051-075.js",
-  "drafts/rewrite-076-100.js",
-].map((filePath) => path.join(repoRoot, filePath));
+const draftsDir = path.join(repoRoot, "drafts");
+const draftFiles = fs.existsSync(draftsDir)
+  ? fs
+      .readdirSync(draftsDir)
+      .filter((fileName) => /^rewrite-\d{3}-\d{3}\.js$/.test(fileName))
+      .sort()
+      .map((fileName) => path.join(draftsDir, fileName))
+  : [];
 
 function loadCurrentStories() {
   const source = fs.readFileSync(storyPath, "utf8");
@@ -26,13 +28,16 @@ function bodyOf(story) {
 function validateStory(story) {
   const body = bodyOf(story);
   const quoteCount = (body.match(/"/g) || []).length / 2;
+  const embeddedDialogue = (story.paragraphs || []).filter(
+    (paragraph) => paragraph.includes("\"") && !/^"[^"]+"$/.test(paragraph),
+  );
   const failures = [];
 
   if (!Number.isInteger(story.index) || story.index < 1 || story.index > 100) {
     failures.push("invalid index");
   }
 
-  if (!Array.isArray(story.paragraphs) || story.paragraphs.length < 4 || story.paragraphs.length > 6) {
+  if (!Array.isArray(story.paragraphs) || story.paragraphs.length < 10 || story.paragraphs.length > 24) {
     failures.push(`paragraph count ${story.paragraphs?.length ?? 0}`);
   }
 
@@ -42,6 +47,10 @@ function validateStory(story) {
 
   if (quoteCount < 2) {
     failures.push(`not enough dialogue (${quoteCount})`);
+  }
+
+  if (embeddedDialogue.length) {
+    failures.push("dialogue embedded in narration");
   }
 
   if (/[A-Za-z]/.test(body)) {
@@ -74,11 +83,6 @@ const draftStories = new Map();
 const failures = [];
 
 for (const draftFile of draftFiles) {
-  if (!fs.existsSync(draftFile)) {
-    failures.push(`missing draft: ${path.relative(repoRoot, draftFile)}`);
-    continue;
-  }
-
   const module = await import(pathToFileURL(draftFile).href + `?t=${Date.now()}`);
   const stories = module.default;
 
@@ -112,10 +116,8 @@ for (const draftFile of draftFiles) {
   }
 }
 
-for (let index = 1; index <= currentStories.length; index += 1) {
-  if (!draftStories.has(index)) {
-    failures.push(`${String(index).padStart(3, "0")}: missing draft story`);
-  }
+if (!draftStories.size) {
+  failures.push("no draft stories found");
 }
 
 if (failures.length) {
@@ -123,7 +125,7 @@ if (failures.length) {
   process.exit(1);
 }
 
-const nextStories = Array.from({ length: currentStories.length }, (_, index) => draftStories.get(index + 1));
+const nextStories = currentStories.map((story, index) => draftStories.get(index + 1) || story);
 const output = `window.ddungeeNaturalStories = [
 ${nextStories.map(formatStory).join(",\n")}
 ];
