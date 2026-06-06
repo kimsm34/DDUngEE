@@ -24,6 +24,20 @@
 
 - [Level 1 Word List Draft](./level-1-word-list.md): 300-word Level 1 draft with TOEIC selection basis.
 
+## Audio Generation
+
+ElevenLabs 음성은 API 키를 브라우저에 넣지 않고, 로컬에서 mp3 파일을 미리 생성해 `assets/audio/level-1`에 저장한다.
+
+```bash
+cp .env.example .env
+# .env에 ELEVENLABS_API_KEY 입력
+node scripts/generate-elevenlabs-audio.mjs --range 1-5 --force
+```
+
+- 기본 출력: `assets/audio/level-1/001.mp3`
+- 전체 생성 예시: `node scripts/generate-elevenlabs-audio.mjs --range 1-100 --force`
+- 목소리 변경: `ELEVENLABS_VOICE_ID`를 `.env`에서 바꾸거나 `--voice-id` 옵션을 쓴다.
+
 ## Next
 
 - 정민이 취향에 맞춘 에피소드별 장면 밀도 추가 개선
