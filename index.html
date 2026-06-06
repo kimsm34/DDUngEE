@@ -273,6 +273,20 @@
         background: var(--navy);
       }
 
+      .progress-summary {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0 2px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 900;
+      }
+
+      .progress-summary strong {
+        color: var(--green);
+      }
+
       .episode-tabs {
         display: grid;
         grid-auto-flow: column;
@@ -324,6 +338,15 @@
         background: linear-gradient(135deg, var(--navy), #255f96);
         color: #fff;
         border-color: transparent;
+      }
+
+      .episode-tab.viewed:not(.active) {
+        border-color: rgba(47, 107, 158, 0.24);
+      }
+
+      .episode-tab.completed:not(.active) {
+        background: rgba(239, 247, 245, 0.96);
+        border-color: rgba(45, 124, 109, 0.3);
       }
 
       .episode-tab:hover,
@@ -788,6 +811,10 @@
           <div class="progress-track">
             <span class="progress-fill" id="progressFill"></span>
           </div>
+          <div class="progress-summary" aria-live="polite">
+            <span id="resumeText">이어하기 WORD 001</span>
+            <strong id="completedText">완료 0 / 100</strong>
+          </div>
           <nav class="episode-tabs" id="episodeTabs" aria-label="에피소드 목록"></nav>
         </aside>
 
@@ -1140,14 +1167,62 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
 
       const activeLevel = levels[0];
       const episodes = activeLevel.episodes;
+      const legacyIndexStorageKey = "ddungee-toeic-level-1-index";
+      const progressStorageKey = "ddungee-toeic-level-1-progress";
+
+      function clampIndex(index) {
+        const numericIndex = Number(index);
+        if (!Number.isFinite(numericIndex)) {
+          return 0;
+        }
+
+        return Math.max(0, Math.min(Math.trunc(numericIndex), episodes.length - 1));
+      }
+
+      function normalizeIndexes(values) {
+        if (!Array.isArray(values)) {
+          return [];
+        }
+
+        return [...new Set(values
+          .map(Number)
+          .filter(Number.isFinite)
+          .map((index) => Math.trunc(index)))]
+          .filter((index) => index >= 0 && index < episodes.length)
+          .sort((first, second) => first - second);
+      }
+
+      function readSavedProgress() {
+        const fallbackIndex = clampIndex(localStorage.getItem(legacyIndexStorageKey) || 0);
+
+        try {
+          const savedProgress = JSON.parse(localStorage.getItem(progressStorageKey) || "{}");
+
+          return {
+            currentIndex:
+              savedProgress && Number.isFinite(Number(savedProgress.currentIndex))
+                ? clampIndex(savedProgress.currentIndex)
+                : fallbackIndex,
+            viewedIndexes: normalizeIndexes(savedProgress.viewedIndexes),
+            revealedIndexes: normalizeIndexes(savedProgress.revealedIndexes),
+          };
+        } catch {
+          return {
+            currentIndex: fallbackIndex,
+            viewedIndexes: [],
+            revealedIndexes: [],
+          };
+        }
+      }
+
+      const savedProgress = readSavedProgress();
 
       const state = {
-        index: Math.min(
-          Number(localStorage.getItem("ddungee-toeic-level-1-index") || 0),
-          episodes.length - 1,
-        ),
+        index: savedProgress.currentIndex,
         sentenceShown: false,
-        revealed: false,
+        revealed: savedProgress.revealedIndexes.includes(savedProgress.currentIndex),
+        viewedIndexes: savedProgress.viewedIndexes,
+        revealedIndexes: savedProgress.revealedIndexes,
       };
 
       const levelShelf = document.querySelector("#levelShelf");
@@ -1156,6 +1231,8 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
       const topProgress = document.querySelector("#topProgress");
       const progressText = document.querySelector("#progressText");
       const progressFill = document.querySelector("#progressFill");
+      const resumeText = document.querySelector("#resumeText");
+      const completedText = document.querySelector("#completedText");
       const dayLabel = document.querySelector("#dayLabel");
       const routeFrom = document.querySelector("#routeFrom");
       const routeTo = document.querySelector("#routeTo");
@@ -1182,16 +1259,52 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         });
       }
 
+      function saveProgress() {
+        const payload = {
+          currentIndex: state.index,
+          viewedIndexes: normalizeIndexes(state.viewedIndexes),
+          revealedIndexes: normalizeIndexes(state.revealedIndexes),
+          lastVisitedAt: new Date().toISOString(),
+        };
+
+        state.viewedIndexes = payload.viewedIndexes;
+        state.revealedIndexes = payload.revealedIndexes;
+        localStorage.setItem(progressStorageKey, JSON.stringify(payload));
+        localStorage.setItem(legacyIndexStorageKey, String(state.index));
+      }
+
+      function markViewed(index) {
+        if (!state.viewedIndexes.includes(index)) {
+          state.viewedIndexes.push(index);
+        }
+
+        saveProgress();
+      }
+
+      function markRevealed(index) {
+        if (!state.revealedIndexes.includes(index)) {
+          state.revealedIndexes.push(index);
+        }
+
+        saveProgress();
+      }
+
+      function getCompletedCount() {
+        return normalizeIndexes(state.revealedIndexes).length;
+      }
+
       function selectEpisode(index) {
-        state.index = Math.max(0, Math.min(index, episodes.length - 1));
+        state.index = clampIndex(index);
         state.sentenceShown = false;
-        state.revealed = false;
-        localStorage.setItem("ddungee-toeic-level-1-index", String(state.index));
+        state.revealed = state.revealedIndexes.includes(state.index);
+        markViewed(state.index);
         render();
         moveToStoryTop();
       }
 
       function renderLevels() {
+        const completedCount = getCompletedCount();
+
         levelShelf.innerHTML = "";
         levels.forEach((level) => {
           const button = document.createElement("button");
@@ -1203,7 +1316,7 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
           button.innerHTML = `
             <span class="level-label">${level.label}</span>
             <span class="level-title">${level.title}</span>
-            <span class="level-status">${isLocked ? `잠김 · ${level.count} words` : `${level.episodes.length} words open`}</span>
+            <span class="level-status">${isLocked ? `잠김 · ${level.count} words` : `완료 ${completedCount} / ${level.episodes.length}`}</span>
           `;
           levelShelf.appendChild(button);
         });
@@ -1213,12 +1326,19 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         episodeTabs.innerHTML = "";
         episodes.forEach((episode, index) => {
           const button = document.createElement("button");
+          const isActive = index === state.index;
+          const isViewed = state.viewedIndexes.includes(index);
+          const isCompleted = state.revealedIndexes.includes(index);
           button.type = "button";
-          button.className = `episode-tab${index === state.index ? " active" : ""}`;
+          button.className = `episode-tab${isActive ? " active" : ""}${isViewed ? " viewed" : ""}${isCompleted ? " completed" : ""}`;
+          button.setAttribute(
+            "aria-label",
+            `${episode.day} ${episode.title}${isCompleted ? " 완료" : isViewed ? " 본 단어" : ""}`,
+          );
           button.innerHTML = `
             <span class="tab-head">
               <span class="tab-day">${episode.day}</span>
-              <span class="tab-plane${index === state.index ? "" : " empty"}" aria-hidden="true">
+              <span class="tab-plane${isActive ? "" : " empty"}" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <use href="#icon-plane"></use>
                 </svg>
@@ -1235,11 +1355,14 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
       function render() {
         const episode = episodes[state.index];
         const current = state.index + 1;
-        const progress = (current / episodes.length) * 100;
+        const completedCount = getCompletedCount();
+        const progress = (completedCount / episodes.length) * 100;
 
         topProgress.textContent = `${storyNumber(current)} / ${storyNumber(episodes.length)}`;
         progressText.textContent = `${current} / ${episodes.length}`;
         progressFill.style.setProperty("--progress", `${progress}%`);
+        resumeText.textContent = `이어하기 ${episode.day}`;
+        completedText.textContent = `완료 ${completedCount} / ${episodes.length}`;
         dayLabel.textContent = `${activeLevel.label} · ${episode.day}`;
         routeFrom.textContent = episode.route[0];
         routeTo.textContent = episode.route[1];
@@ -1275,6 +1398,11 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
 
       revealButton.addEventListener("click", () => {
         state.revealed = !state.revealed;
+        if (state.revealed) {
+          markRevealed(state.index);
+        } else {
+          saveProgress();
+        }
         render();
       });
 
@@ -1293,6 +1421,7 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         });
       });
 
+      markViewed(state.index);
       render();
     </script>
   </body>
