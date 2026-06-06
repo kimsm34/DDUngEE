@@ -26,7 +26,19 @@
 
 ## Audio Generation
 
-ElevenLabs 음성은 API 키를 브라우저에 넣지 않고, 로컬에서 mp3 파일을 미리 생성해 `assets/audio/level-1`에 저장한다.
+기본 음성은 무료 오픈소스 Kokoro TTS로 로컬 생성한다. 브라우저에서 API를 호출하지 않고, 미리 만든 m4a 파일을 `assets/audio/level-1`에 저장한다.
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-kokoro.txt
+.venv/bin/python scripts/generate-kokoro-audio.py --range 1-100 --force
+```
+
+- 기본 출력: `assets/audio/level-1/001.m4a`
+- 기본 음성: `af_heart`
+- 목소리 변경 예시: `.venv/bin/python scripts/generate-kokoro-audio.py --range 1-5 --voice af_sky --force`
+
+ElevenLabs는 더 높은 품질이 필요할 때 쓰는 선택지다. 이 경우에도 API 키를 브라우저에 넣지 않고, 로컬에서 mp3 파일을 미리 생성한다.
 
 ```bash
 cp .env.example .env
