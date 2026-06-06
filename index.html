@@ -241,15 +241,6 @@
         text-transform: uppercase;
       }
 
-      .progress-chip {
-        border: 1px solid rgba(20, 56, 95, 0.14);
-        background: rgba(255, 253, 248, 0.8);
-        padding: 8px 10px;
-        color: var(--navy);
-        font-weight: 900;
-        border-radius: 8px;
-      }
-
       .progress-track {
         height: 3px;
         background: rgba(20, 56, 95, 0.13);
@@ -880,7 +871,6 @@
             <div>
               <p class="day-label" id="dayLabel">LEVEL 1</p>
             </div>
-            <div class="progress-chip" id="progressText">1 / 5</div>
           </div>
           <div class="progress-track">
             <span class="progress-fill" id="progressFill"></span>
@@ -2544,7 +2534,6 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
       const drawerBackdrop = document.querySelector("#drawerBackdrop");
       const drawerCloseButton = document.querySelector("#drawerCloseButton");
       const topProgress = document.querySelector("#topProgress");
-      const progressText = document.querySelector("#progressText");
       const progressFill = document.querySelector("#progressFill");
       const resumeText = document.querySelector("#resumeText");
       const completedText = document.querySelector("#completedText");
@@ -2755,7 +2744,6 @@ prefer|선호하다|딸기냐 말차냐|I prefer tea to coffee.|여러 것 중 �
         const progress = (completedCount / episodes.length) * 100;
 
         topProgress.textContent = `${storyNumber(current)} / ${storyNumber(episodes.length)}`;
-        progressText.textContent = `${current} / ${episodes.length}`;
         progressFill.style.setProperty("--progress", `${progress}%`);
         resumeText.textContent = "진행률";
         completedText.textContent = `읽음 ${completedCount} / ${episodes.length}`;
